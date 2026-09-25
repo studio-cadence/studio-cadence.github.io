@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>CADENCE</title>
+<meta name="description" content="CADENCE は縦型ショート動画の制作スタジオです。題材の選定から台本・音声・映像・公開・計測までを一つの工程にまとめています。">
+<meta property="og:title" content="CADENCE">
+<meta property="og:description" content="CADENCE は縦型ショート動画の制作スタジオです。題材の選定から台本・音声・映像・公開・計測までを一つの工程にまとめています。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://studio-cadence.github.io/">
+<meta property="og:image" content="https://studio-cadence.github.io/bg/edo-sento.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Dela+Gothic+One&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap">
+<style>
+/* C「コラージュ」v3 — 参照 c01 Studio Loop / c09 Noah Lesage / c13 ants。A の社名（字の中に作品）と全面の背景映像を合流。
+   単一の明るい見た目（漫画の紙）。赤と黄は各チャンネルのヘッダーの行色（『』赤・【】黄）から */
+:root{
+  --paper:#f4f6f8; --dot:rgba(20,20,23,.07); --ink:#141417; --ink-2:#55585f; --panel:#ffffff;
+  --red:#e8322a; --yellow:#ffd21f;
+  --display:"Dela Gothic One","Hiragino Sans","Yu Gothic UI",sans-serif;
+  --wide:"Archivo","Arial Black",Impact,sans-serif;
+  --sans:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic UI",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0}
+body{background:var(--paper);background-image:radial-gradient(var(--dot) 1.1px,transparent 1.3px);background-size:9px 9px;color:var(--ink);font:500 15px/1.8 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+/* 1 字だけ次の行に落ちる折り返しを避ける */
+p,li,figcaption,dd,small{text-wrap:pretty}
+.wrap{padding-inline:clamp(16px,4vw,56px)}
+.mocktag{position:fixed;left:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:60;font:400 11px/1 var(--display);letter-spacing:.08em;background:var(--ink);color:var(--paper);padding:8px 10px;border-radius:2px}
+
+.navbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--paper);border-bottom:3px solid var(--ink)}
+.nav{display:flex;align-items:center;gap:22px;padding-block:14px;font:700 13px/1 var(--sans)}
+.nav .brand{font:400 18px/1 var(--display);letter-spacing:.02em}
+.nav .sp{flex:1}
+.nav a{text-decoration:none;border-bottom:3px solid transparent}
+.nav a:hover{border-color:var(--yellow)}
+.nav .links{display:flex;gap:22px}
+.nav .links .go{background:var(--red);color:var(--panel);padding:7px 10px 6px;border:2px solid var(--ink);box-shadow:2px 2px 0 var(--ink)}
+.nav .links .go:hover{border-color:var(--ink);background:var(--ink)}
+@media (max-width:640px){.nav{gap:10px;padding-block:10px}.nav .brand{font-size:13px}.nav{padding-block:4px}.nav .links{gap:2px;font-size:13px;overflow-x:auto;scrollbar-width:none;align-items:center}.nav .links a{flex:0 0 auto;display:flex;align-items:center;min-height:44px;min-width:42px;justify-content:center;padding:0 3px}.nav .links .go{min-height:40px;padding:0 7px;margin-left:2px}}
+
+/* 散らばる作品 — 全面の背景映像の上に。背景は A の「細い窓が開く」で出す */
+.pile{position:relative;height:clamp(560px,60vw,820px);max-width:100%;overflow:hidden;touch-action:pan-y;background:var(--ink)}
+.bg{position:absolute;inset:0;animation:open 1.7s cubic-bezier(.7,0,.2,1) both}
+.bg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.2s}
+.bg video.on{opacity:1}
+.bg::after{content:"";position:absolute;inset:0;background:radial-gradient(rgba(20,20,23,.55) 1.2px,transparent 1.5px) 0 0/7px 7px,rgba(20,20,23,.5)}
+@keyframes open{0%{clip-path:inset(38% 47% 38% 47%)}40%{clip-path:inset(38% 47% 38% 47%)}100%{clip-path:inset(0 0 0 0)}}
+.shot{position:absolute;width:clamp(92px,11vw,170px);aspect-ratio:9/16;left:calc(var(--x) * 1%);top:calc(var(--y) * 1%);translate:-50% -50%;rotate:calc(var(--r) * 1deg);
+  background:#000;border:5px solid var(--panel);border-radius:16px;overflow:hidden;box-shadow:6px 8px 0 rgba(0,0,0,.45);cursor:grab;
+  animation:drop .95s cubic-bezier(.25,1.5,.45,1) both, sway 2.4s ease-in-out infinite alternate;animation-delay:calc(.9s + var(--i) * 90ms), calc(2.1s + var(--i) * 170ms)}
+.shot.drag{cursor:grabbing;animation:none;z-index:40;box-shadow:12px 16px 0 rgba(0,0,0,.5)}
+.shot video,.shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;user-select:none}
+@keyframes drop{0%{transform:translateY(-110vh) rotate(calc(var(--r) * -2.5deg))}100%{transform:none}}
+@keyframes sway{from{rotate:calc(var(--r) * 1deg - 1.6deg)}to{rotate:calc(var(--r) * 1deg + 1.6deg)}}
+/* 社名: 白いコマの中で、字の中だけ作品が映る（A の mix-blend。白地が要るのでコマにした） */
+.title{position:absolute;left:50%;top:42%;translate:-50% -50%;z-index:20;margin:0;width:min(80%,860px);padding:0;isolation:isolate;animation:stamp .5s cubic-bezier(.3,1.6,.5,1) 1.55s both}
+.mark{position:relative;overflow:hidden;background:#fff;aspect-ratio:1440/380;container-type:inline-size}
+.mark-media{position:absolute;inset:0}
+.mark-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0}
+.mark-media video.on{opacity:1}
+.mark-knock{position:absolute;inset:0;display:grid;place-items:center;background:#fff;color:#000;mix-blend-mode:screen}
+.mark-knock span,.mark-line span{font-family:var(--wide);font-weight:900;font-variation-settings:"wdth" 125;font-size:15.3cqw;line-height:.8;letter-spacing:-.035em;transform:translateY(.04em)}
+/* 字の縁: 抜き（screen）の上に、塗り無し＋黒の線だけの同じ字を重ねる。抜きの層に線を引くと線も映像になるので別の層 */
+.mark-line{position:absolute;inset:0;display:grid;place-items:center;color:transparent;-webkit-text-stroke:.55cqw var(--ink);paint-order:stroke;pointer-events:none}
+@keyframes stamp{0%{scale:1.6;opacity:0}100%{scale:1;opacity:1}}
+.bubble{position:absolute;left:50%;top:66%;translate:-50% 0;z-index:21;background:var(--yellow);border:4px solid var(--ink);border-radius:999px;padding:14px 30px;font:400 clamp(17px,2.2vw,30px)/1.3 var(--display);white-space:nowrap;animation:pop .45s cubic-bezier(.3,1.8,.5,1) 2s both}
+.bubble::after{content:"";position:absolute;left:24%;top:-22px;width:26px;height:26px;background:var(--yellow);border-left:4px solid var(--ink);border-top:4px solid var(--ink);transform:skewX(-28deg) rotate(22deg);border-top-left-radius:4px}
+.bubble .nb{display:inline-block}
+.bubble small{display:block;font:700 11px/1 var(--sans);color:var(--ink-2);text-align:center;margin-top:6px;letter-spacing:.04em}
+@keyframes pop{0%{scale:0}100%{scale:1}}
+.hint{position:absolute;left:clamp(16px,4vw,56px);top:14px;z-index:22;font:700 12px/1 var(--sans);color:var(--paper)}
+@media (max-width:640px){.shot.extra{display:none}.title{width:90%;top:40%}.bubble{white-space:normal;text-align:center;width:86%;padding:12px 18px;top:60%}.hint{display:none}}
+
+/* Luna（live2D のチャット案内役）の場所。完成後に差し込む */
+/* 下の常駐。主役は「連絡先へ」（本人 2026-09-25: 最優先、主張強すぎるくらいでいい）。Luna は脇の入口 */
+.dock{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:60;display:flex;align-items:center;gap:12px;transition:transform .3s,opacity .3s}
+.dock.away{transform:translateY(160%);opacity:0;pointer-events:none}
+.dock a{text-decoration:none}
+.dock .cta{display:grid;gap:4px;background:var(--red);color:var(--panel);border:4px solid var(--ink);box-shadow:6px 6px 0 var(--ink);padding:14px 26px 15px;border-radius:14px;animation:nudge 4s ease-in-out 2s infinite}
+.dock .cta small{font:700 12px/1 var(--sans);color:var(--yellow);letter-spacing:.08em}
+.dock .cta b{font:400 clamp(19px,1.7vw,24px)/1 var(--display);font-weight:400;white-space:nowrap}
+.dock .cta:hover{background:var(--ink);box-shadow:6px 6px 0 var(--red)}
+.dock .face{width:64px;height:64px;flex:0 0 auto;border-radius:50%;background:var(--panel);border:4px solid var(--ink);box-shadow:3px 3px 0 var(--ink);display:grid;place-items:center;font:400 12px/1 var(--display);color:var(--ink)}
+@keyframes nudge{0%,86%,100%{transform:none}89%{transform:rotate(-3deg) scale(1.05)}92%{transform:rotate(3deg) scale(1.05)}95%{transform:rotate(-2deg) scale(1.03)}}
+@media (max-width:640px){
+  .dock{left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));gap:10px}
+  .dock .cta{flex:1;grid-template-columns:auto 1fr;align-items:center;text-align:left;padding:13px 16px 14px;box-shadow:4px 4px 0 var(--ink)}
+  .dock .cta small{grid-row:1;font-size:11px;writing-mode:horizontal-tb}
+  .dock .cta b{font-size:20px;text-align:right}
+  .dock .face{width:54px;height:54px;font-size:11px}
+  .mocktag{display:none}
+  body::after{content:"";display:block;height:92px}
+}
+@media (prefers-reduced-motion:reduce){.dock .cta{animation:none}}
+
+/* コマ */
+.koma{background:var(--panel);border:4px solid var(--ink);box-shadow:6px 6px 0 var(--ink)}
+.intro{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:18px;margin-block:24px 0}
+.intro .koma{padding:clamp(20px,3vw,36px)}
+.intro p{margin:0;font-size:16px;max-width:44ch;text-wrap:pretty}
+.nums{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0}
+.nums div{display:grid;gap:4px;align-content:center;justify-items:center;padding:18px 8px;border-right:3px solid var(--ink)}
+.nums div:last-child{border-right:0}
+.nums b{font:400 clamp(40px,5vw,64px)/1 var(--display);color:var(--red);font-variant-numeric:tabular-nums}
+.nums span{font:700 12px/1.3 var(--sans)}
+.nums-note{grid-column:1/-1;text-align:center;font-size:11px;color:var(--ink-2);border-top:3px solid var(--ink);padding:6px}
+@media (max-width:800px){.intro{grid-template-columns:1fr}}
+
+.sec{padding-top:clamp(56px,8vw,112px)}
+.sec-h{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:22px}
+.sec-h h2{margin:0;display:inline-block;background:var(--ink);color:var(--paper);font:400 clamp(22px,3vw,36px)/1 var(--display);padding:10px 16px 12px;rotate:-1.5deg}
+.sec-h small{font:700 13px/1.4 var(--sans);color:var(--ink-2)}
+
+/* 作品のコマ割り */
+.works{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px}
+.work{display:grid;grid-template-rows:auto 1fr;text-decoration:none;transition:translate .15s,box-shadow .15s}
+.work:hover{translate:-3px -3px;box-shadow:9px 9px 0 var(--ink)}
+.work .v{position:relative;aspect-ratio:9/16;background:#000;border-bottom:4px solid var(--ink);overflow:hidden}
+.work video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.work .cap{padding:10px 12px 12px;display:grid;gap:4px;align-content:start}
+.work .ch{justify-self:start;font:700 11px/1 var(--sans);background:var(--yellow);padding:4px 6px;border:2px solid var(--ink)}
+.work .t{font:700 13px/1.5 var(--sans);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+@media (max-width:1000px){.works{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:520px){.works{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* いちばん見てほしい 3 本 */
+.best{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;max-width:1040px}
+.pick{display:grid;grid-template-rows:auto 1fr;text-decoration:none;position:relative;transition:translate .15s,box-shadow .15s}
+.pick:hover{translate:-3px -3px;box-shadow:9px 9px 0 var(--ink)}
+.pick .v{position:relative;aspect-ratio:9/16;background:#000;border-bottom:4px solid var(--ink);overflow:hidden}
+.pick video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pick .cap{padding:12px 14px 16px;display:grid;gap:6px;align-content:start}
+.pick .t{font:400 17px/1.45 var(--display)}
+.pick .note{font:700 12px/1.5 var(--sans);color:var(--ink-2)}
+@media (max-width:640px){.best{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:74%;overflow-x:auto;scroll-snap-type:x mandatory;padding:14px 14px 16px 12px;margin-inline:-4px}.pick{scroll-snap-align:start}}
+/* カードの上の黄色い帯: 動画の上端（各局の黒ヘッダー）がカードの黒枠と一続きに見えないように。大きい 3 本はチャンネル名入り。
+   動画の上に重ねてカードの長さは変えない（ヘッダーの字は動画の高さ 10% より下なので、帯はその上の黒い余白に収まる） */
+.pick .v,.work .v{container-type:inline-size}
+/* 高さは動画の 8%（幅の 14.2%）。各局のヘッダーの字は高さの 9〜10% から始まる（edo-daiku 9.2%・otto-wo-maku 9.7% を実測） */
+.band{position:absolute;left:0;right:0;top:0;z-index:1;display:flex;align-items:center;height:14.2cqw;background:var(--yellow);border-bottom:3px solid var(--ink);font:400 clamp(11px,4.4cqw,15px)/1 var(--display);padding:0 12px}
+/* チャンネルのタブ（旧「チャンネル」節を合流） */
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-top:clamp(40px,5vw,64px)}
+.tabs button{font:400 15px/1 var(--display);color:var(--ink);background:var(--panel);border:3px solid var(--ink);border-bottom:0;padding:12px 14px 11px;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--ink);color:var(--paper)}
+.tabs button:not([aria-selected="true"]):hover{background:var(--yellow)}
+.tabpanel{padding:18px clamp(14px,2vw,22px) 20px}
+.tabpanel .head{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 16px;margin-bottom:14px}
+.tabpanel .head b{font:400 22px/1.2 var(--display)}
+.tabpanel .head span{font-size:13px;color:var(--ink-2);font-weight:700}
+.tabpanel .head a{margin-left:auto;font:700 13px/1 var(--sans);text-decoration:none;border-bottom:3px solid var(--yellow);padding-bottom:3px}
+.strip{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x proximity;padding:4px 10px 14px 2px}
+.strip .work{flex:0 0 clamp(138px,15vw,180px);scroll-snap-align:start}
+@media (max-width:640px){.tabs{flex-wrap:nowrap;overflow-x:auto;gap:6px;scrollbar-width:none}.tabs button{flex:0 0 auto;font-size:13px;padding:10px 10px 9px}.tabpanel .head a{margin-left:0}}
+
+.fold summary{list-style:none;cursor:pointer;display:flex;flex-wrap:wrap;align-items:center;gap:14px 18px;padding:18px 20px;background:var(--panel);border:4px solid var(--ink);box-shadow:5px 5px 0 var(--ink);max-width:1180px}
+.fold summary::-webkit-details-marker{display:none}
+.fold .flow{display:flex;flex-wrap:wrap;gap:8px 6px;flex:1 1 520px}
+.fold .flow span{font:400 14px/1 var(--display);padding:8px 10px 7px;background:var(--paper);border:2px solid var(--ink)}
+.fold .flow b{color:var(--red);font-weight:400;margin-right:5px}
+.fold .open{font:400 15px/1 var(--display);background:var(--yellow);border:3px solid var(--ink);padding:11px 16px 10px;white-space:nowrap}
+.fold .open::after{content:" ▼"}
+.fold[open] .open::after{content:" ▲"}
+.fold[open] .open{font-size:0}
+.fold[open] .open::before{content:"たたむ";font-size:15px}
+.fold[open] summary{margin-bottom:clamp(18px,3vw,32px)}
+/* つくり方の 4 コマ ×2。絵は字なしで起こし、札と吹き出しは HTML で重ねる（スマホで読める大きさを保つため） */
+.manga{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(18px,3vw,40px);max-width:1180px}
+.yonkoma{display:grid;gap:12px;align-content:start}
+.yonkoma h3{margin:0 0 4px;font:400 18px/1.3 var(--display)}
+.yonkoma h3 span{background:var(--red);color:var(--panel);padding:3px 8px;margin-right:8px}
+.panel{margin:0;display:grid}
+.panel .img{position:relative;aspect-ratio:3/2;overflow:hidden;background:var(--paper)}
+.panel img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.panel .tag{position:absolute;left:0;top:0;background:var(--ink);color:var(--paper);font:400 clamp(13px,1.4vw,17px)/1 var(--display);padding:8px 12px 9px}
+.panel .tag b{color:var(--yellow);font-weight:400;margin-right:6px}
+.panel .fuki{position:absolute;right:3%;top:5%;white-space:nowrap;background:var(--panel);border:3px solid var(--ink);border-radius:50%/42%;padding:.7em 1.1em;font:400 clamp(13px,1.5vw,19px)/1.35 var(--display);text-align:center}
+.panel .fuki::after{content:"";position:absolute;left:22%;bottom:-14px;width:16px;height:18px;background:var(--panel);border-right:3px solid var(--ink);border-bottom:3px solid var(--ink);transform:skewX(-30deg) rotate(40deg)}
+.panel figcaption{padding:8px 12px 10px;border-top:4px solid var(--ink);font:700 12.5px/1.6 var(--sans);color:var(--ink-2)}
+@media (max-width:860px){.manga{grid-template-columns:1fr}}
+@media (max-width:480px){.panel .fuki{border-width:2px;padding:.55em .8em}}
+.stamps{display:flex;flex-wrap:wrap;gap:12px 16px;margin-top:26px}
+.stamps span{font:700 13px/1 var(--sans);color:var(--red);border:3px solid var(--red);border-radius:6px;padding:8px 10px;rotate:calc(var(--r) * 1deg);background:var(--panel)}
+
+.svc{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.svc div{padding:20px 20px 24px;display:grid;gap:10px;align-content:start}
+.svc b{font:400 19px/1.4 var(--display)}
+.svc p{margin:0;font-size:13px;color:var(--ink-2)}
+@media (max-width:900px){.svc{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.svc{grid-template-columns:1fr}}
+.budget{margin-top:18px;padding:18px 22px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 28px;align-items:start;background:var(--yellow)}
+.budget b{font:400 19px/1.4 var(--display)}
+.budget ul{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px}
+.budget li{font:700 13px/1 var(--sans);background:var(--panel);border:2px solid var(--ink);padding:7px 9px}
+.budget p{grid-column:2;margin:4px 0 0;font:700 13px/1.6 var(--sans)}
+@media (max-width:640px){.budget{grid-template-columns:1fr}.budget p{grid-column:1}}
+/* よくある質問 */
+.faq{display:grid;gap:12px;max-width:880px}
+.faq details{padding:0}
+.faq summary{list-style:none;cursor:pointer;display:flex;gap:12px;align-items:baseline;padding:16px 20px;font:400 17px/1.5 var(--display)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::before{content:"Q";color:var(--red);font-size:20px}
+.faq details[open] summary{border-bottom:3px solid var(--ink)}
+.faq .a{padding:14px 20px 18px 48px;font-size:14px}
+.faq .a p{margin:0}
+
+.contact{margin-top:clamp(64px,9vw,128px);display:grid;justify-items:center;gap:18px;text-align:center}
+.contact .big{background:var(--yellow);border:5px solid var(--ink);border-radius:48px;padding:clamp(22px,4vw,44px) clamp(20px,5vw,64px);position:relative;max-width:100%}
+.contact .big::after{content:"";position:absolute;left:18%;bottom:-30px;width:34px;height:34px;background:var(--yellow);border-right:5px solid var(--ink);border-bottom:5px solid var(--ink);transform:skewX(24deg) rotate(28deg)}
+.contact .k{font:700 14px/1 var(--sans)}
+.contact .mail{font:400 clamp(22px,4.6vw,60px)/1.2 var(--display);overflow-wrap:anywhere;margin-top:10px;user-select:all}
+.contact .acts{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:24px}
+.contact .write,.contact button{font:400 15px/1 var(--display);border:0;padding:14px 20px;cursor:pointer;text-decoration:none}
+.contact .write{background:var(--red);color:var(--panel);box-shadow:4px 4px 0 var(--ink)}
+.contact button{background:var(--ink);color:var(--paper);box-shadow:4px 4px 0 var(--red)}
+.contact small{color:var(--ink-2);font-weight:700}
+footer{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between;padding-block:40px 64px;font-size:12px;color:var(--ink-2);font-weight:700}
+.ph{outline:2px dashed var(--red);outline-offset:3px}
+[hidden]{display:none!important}
+footer .cred{display:flex;flex-direction:column;gap:4px}
+.nw{white-space:nowrap}
+/* 冒頭の演出は背景の絵・字・画面の表示がそろってから始める（.wait を JS が外す）。遅い回線では、読み込み中に 1.7 秒の演出が終わり、開いた枠に後から映像がはまって見えていた（2026-09-25） */
+.pile.wait .bg,.pile.wait .shot,.pile.wait .title,.pile.wait .bubble{animation-play-state:paused}
+@media (prefers-reduced-motion:reduce){.shot,.title,.bubble,.bg{animation:none!important}}
+</style>
+
+
+<div class="wrap navbar">
+  <nav class="nav">
+    <span class="brand">CADENCE</span><span class="sp"></span>
+    <span class="links"><a href="#works">作品</a><a href="#process">つくり方</a><a href="#service">ご依頼</a><a href="#faq">質問</a><a class="go" href="#contact">連絡先</a></span>
+  </nav>
+
+</div>
+
+<div class="pile wait" id="pile">
+  <div class="bg" id="bg"></div>
+  <h1 class="title koma" aria-label="CADENCE"><div class="mark"><div class="mark-media" id="markMedia"></div><div class="mark-knock" aria-hidden="true"><span>CADENCE</span></div><div class="mark-line" aria-hidden="true"><span>CADENCE</span></div></div></h1>
+  <div class="bubble"><span class="nb">企画から制作まで、</span><span class="nb">任せられる動画制作</span></div>
+  <span class="hint">作品はつかんで動かせます</span>
+</div>
+
+<div class="wrap">
+  <section class="intro">
+    <div class="koma"><p>CADENCE は縦型ショート動画の制作スタジオです。題材の選定から台本・音声・映像・公開・計測までを一つの工程にまとめ、<span data-site="channels">5</span> つのチャンネルで毎日公開しています。</p></div>
+    <div class="koma nums"><div><b data-site="channels">5</b><span>チャンネル</span></div><div><b data-site="videos">33</b><span>本を公開</span></div><div class="nums-note"><span data-site="asOf">2026-09-25</span> 時点（予約済みを含む）</div></div>
+  </section>
+
+  <section class="sec" id="works">
+    <div class="sec-h"><h2>作品</h2><small>押すと YouTube で開きます</small></div>
+    <div class="best" id="best"></div>
+    <div class="tabs" role="tablist" id="tabs" aria-label="チャンネル"></div>
+    <div class="tabpanel koma" role="tabpanel" id="tabpanel"></div>
+  </section>
+
+  <section class="sec" id="process">
+    <div class="sec-h"><h2>つくり方</h2><small>一本ごとに、同じ 8 つの工程を通します。案内は Luna</small></div>
+    <details class="fold" id="fold"><summary><span class="flow" id="flow"></span><span class="open">漫画で見る（8 コマ）</span></summary>
+    <div class="manga" id="manga"></div></details>
+    <div class="stamps" id="tech"></div>
+  </section>
+
+  <section class="sec" id="service">
+    <div class="sec-h"><h2>お請けできること</h2></div>
+    <div class="svc" id="svc"></div>
+    <div class="budget koma"><b>予算が変わるところ</b><ul><li>尺（〜60 秒のショート／8〜15 分の長尺）</li><li>本数（単発／シリーズ）</li><li>絵の枚数と描き込み</li><li>素材の持ち込みの有無</li><li>納期</li></ul><p>料金は内容をうかがってお見積もりします。</p></div>
+  </section>
+
+  <section class="sec" id="faq">
+    <div class="sec-h"><h2>よくある質問</h2></div>
+    <div class="faq">
+      <details class="koma" open><summary>何を書いて送ればいいですか</summary><div class="a"><p>作りたいもの（上の 4 つのどれに近いか）・本数・使う場所（ご自身のチャンネル／広告など）・希望の時期・お手持ちの素材の有無。下の「メールを書く」を押すと、この項目入りのひな形が開きます。</p></div></details>
+      <details class="koma"><summary>返信はいつ来ますか</summary><div class="a"><p>2 日以内にお返事します。</p></div></details>
+      <details class="koma"><summary>料金はいくらですか</summary><div class="a"><p>上の「予算が変わるところ」で決まります。内容をうかがってお見積もりします。</p></div></details>
+      <details class="koma"><summary>チャンネルを持っていなくても頼めますか</summary><div class="a"><p>はい。動画の納品だけでもお請けします。</p></div></details>
+      <details class="koma"><summary>作った動画の権利は</summary><div class="a"><p>完成した動画の権利は、お支払いのあとに、お渡しできるものをすべてお客様へお渡しします。お預かりした素材はお客様のものです。こちらで用意する音楽・効果音・合成音声・素材は、それぞれの規約の範囲でのご利用になります（クレジット表記が要るもの、YouTube の Content ID に登録できないものはお伝えします）。</p></div></details>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="big"><div class="k">ご依頼・ご相談はこちらへ</div><div class="mail" id="mail">studio.cadence.jp<wbr>@gmail.com</div></div>
+    <div class="acts"><a class="write" id="write" href="#">メールを書く</a><button type="button" id="copy">アドレスをコピー</button></div>
+    <small>メールが開かないときはアドレスをコピーしてください</small>
+  </section>
+
+  <footer>
+    <span>© 2026 CADENCE</span>
+    <span class="cred"><span>作品の音声: VOICEVOX:青山龍星 ／ AquesTalk<span class="nw">（株式会社アクエスト）</span></span><span>音楽: BGMer・甘茶の音楽工房・OpenTracks</span><span>効果音: 効果音ラボ</span><span>絵: 自作（AI 生成）・いらすとや・パブリックドメインの資料<span class="nw">（国立国会図書館ほか）</span></span><span>各動画の出典は概要欄に記載</span></span>
+  </footer>
+</div>
+
+<div class="dock" id="dock"><a class="cta" href="#contact"><small>ご依頼・ご相談</small><b>連絡先へ →</b></a><a class="face" href="#contact" aria-label="Luna（準備中）" hidden>Luna</a></div>
+
+<script src="site.js"></script>
+<script>
+new IntersectionObserver(([e])=>document.getElementById("dock").classList.toggle("away", e.isIntersecting), {threshold:.25}).observe(document.getElementById("contact"));
+const WORKS = SITE.works;
+const CHANNELS = SITE.channels;
+const chUrl = name => `https://www.youtube.com/channel/${CHANNELS.find(c=>c[0]===name)[2]}`;
+// 未公開（動画 ID が空）はチャンネルへ
+const workUrl = w => w.v ? `https://www.youtube.com/shorts/${w.v}` : chUrl(w.ch);
+// 数字は site.js から入れる
+const SITE_VALUES = {channels: SITE.channels.length, videos: SITE.videos, asOf: SITE.asOf};
+document.querySelectorAll("[data-site]").forEach(el=>{ el.textContent = SITE_VALUES[el.dataset.site]; });
+const STEPS = [
+ // [工程, 説明, Luna の一言]。絵は manga/p1〜p8（字なし）
+ ["走査","伸びている動画を毎日集め、型ごとに分けて次の題材の候補を出す","伸びてるの、今日はこれ"],
+ ["題材","型に合う話を選び、初見で何の話か分かるかを先に確かめる","分かんない話は、ボツ"],
+ ["台本","一秒単位で組む。間は句読点で書き、どの音声エンジンでも同じに読める","一秒ずつ、組むよ"],
+ ["音声","合成音声で読み上げ、行ごとの尺を測って映像の切れ目を決める","尺はここで決まる"],
+ ["画像","場面ごとに絵を起こし、同じ人物の顔が途中で変わらないよう照合する","顔、途中で変えない"],
+ ["組み立て","ヘッダー・テロップ・フリガナ・効果音・BGM を台本から焼く","全部、台本から焼く"],
+ ["公開","12:00 と 19:00 に予約し、公開日時を画面で照合する","12時と19時。毎日"],
+ ["計測","視聴を続けた割合と維持グラフを見て、次の一本の作りを変える","どこで離れたか、見る"],
+];
+const TECH = ["Python","ffmpeg","Playwright","YouTube Data API v3","VOICEVOX","AivisSpeech","画像生成モデル","Git"];
+const SVC = [
+ ["ナレーション付き解説ショート","歴史・雑学・商品やサービスの由来を、写真や絵とナレーションで 1 分に。"],
+ ["漫画調のストーリーショート","体験談や再現コントを、漫画風の絵と台詞で。シリーズでの制作も。"],
+ ["実写素材の編集＋テロップ","お手持ちの映像を縦型に切り出し、テロップ・効果音・BGM を付けて。"],
+ ["長尺の解説動画","ショートで試した題材を、8〜15 分の解説に広げます。"],
+];
+
+// 散らばる作品（x%, y%, 傾き）。先頭 3 枚だけ動画、残りはポスター
+const SPOTS = [[9,30,-10],[22,74,7],[32,20,4],[69,20,-6],[88,34,9],[92,78,-5],[77,80,5],[8,82,-8],[54,86,3]];
+const pile = document.getElementById("pile");
+// 全面の背景（16:9 に切り出した 2 本を 8 秒ごとに入れ替え）
+const bg = document.getElementById("bg");
+const heroGo = () => pile.classList.remove("wait");
+Promise.all([
+  new Promise(r => { const i = new Image(); i.onload = i.onerror = r; i.src = "bg/edo-sento.jpg"; }),
+  document.fonts ? document.fonts.ready : null,
+  new Promise(r => document.readyState === "complete" ? r() : addEventListener("load", r, {once:true})),
+  new Promise(r => document.visibilityState === "visible" ? r() : document.addEventListener("visibilitychange", function f(){ if(document.visibilityState === "visible"){ document.removeEventListener("visibilitychange", f); r(); } })),
+]).then(() => requestAnimationFrame(() => requestAnimationFrame(heroGo)));
+setTimeout(heroGo, 6000);
+const bgv = ["edo-sento","chuusha-kippu"].map((s,i)=>{ const v=document.createElement("video"); Object.assign(v,{muted:true,loop:true,playsInline:true,autoplay:true,src:`bg/${s}.mp4`,poster:`bg/${s}.jpg`}); v.setAttribute("muted",""); if(i===0) v.classList.add("on"); bg.appendChild(v); return v; });
+let bi = 0;
+setInterval(()=>{ bgv[bi].classList.remove("on"); bi=(bi+1)%bgv.length; bgv[bi].classList.add("on"); }, 8000);
+// 社名の中の作品: 1.25 秒の拍で切り替える。映っていない 3 本は止めておく
+const mm = document.getElementById("markMedia");
+const hv = ["katsushika-oi","oshiri-missile","yatai-meshi","kuuki-yomeru"].map((s,i)=>{ const v=document.createElement("video"); Object.assign(v,{muted:true,loop:true,playsInline:true,autoplay:i===0,src:`works/${s}.mp4`,poster:`works/${s}.jpg`}); v.setAttribute("muted",""); if(i===0) v.classList.add("on"); mm.appendChild(v); return v; });
+let hi = 0;
+setInterval(()=>{ const a=hv[hi]; hi=(hi+1)%hv.length; const b=hv[hi]; b.play().catch(()=>{}); b.classList.add("on"); a.classList.remove("on"); a.pause(); }, 1250);
+SPOTS.forEach((p,i)=>{
+  const w = WORKS[i], el = document.createElement("a");
+  el.className = "shot" + (i >= 7 ? " extra" : ""); el.href = workUrl(w); el.target = "_blank"; el.rel = "noopener";
+  el.style.cssText = `--x:${p[0]};--y:${p[1]};--r:${p[2]};--i:${i}`;
+  el.innerHTML = i < 3 ? `<video muted loop playsinline autoplay poster="works/${w.slug}.jpg" src="works/${w.slug}.mp4"></video>` : `<img src="works/${w.slug}.jpg" alt="">`;
+  pile.insertBefore(el, bg.nextSibling);
+});
+pile.querySelectorAll(".shot video, .bg video, .mark-media video.on").forEach(v=>{ v.muted=true; v.play().catch(()=>{}); });
+
+// つかんで動かす（動かしたときはリンクを開かない）
+let drag = null;
+pile.addEventListener("pointerdown", e=>{
+  const s = e.target.closest(".shot"); if(!s) return;
+  const r = pile.getBoundingClientRect();
+  drag = {s, moved:false, dx:e.clientX, dy:e.clientY, x:parseFloat(s.style.getPropertyValue("--x")), y:parseFloat(s.style.getPropertyValue("--y")), w:r.width, h:r.height};
+  s.setPointerCapture(e.pointerId);
+});
+pile.addEventListener("pointermove", e=>{
+  if(!drag) return;
+  const mx = e.clientX-drag.dx, my = e.clientY-drag.dy;
+  if(!drag.moved && Math.hypot(mx,my) < 6) return;
+  drag.moved = true; drag.s.classList.add("drag");
+  drag.s.style.setProperty("--x", drag.x + mx/drag.w*100); drag.s.style.setProperty("--y", drag.y + my/drag.h*100);
+});
+pile.addEventListener("pointerup", ()=>{ if(!drag) return; const s=drag.s; if(drag.moved){ s.dataset.justDragged="1"; setTimeout(()=>delete s.dataset.justDragged,0); } s.classList.remove("drag"); s.style.animation="none"; drag=null; });
+pile.addEventListener("click", e=>{ const s=e.target.closest(".shot"); if(s && s.dataset.justDragged!==undefined) e.preventDefault(); }, true);
+
+// 見えている作品だけ再生（ポスターは最初から見えている。隠れたタブの動画は交差しないので止まる）
+const io = new IntersectionObserver(es=>es.forEach(en=>{ const v=en.target; v.muted=true; en.isIntersecting ? v.play().catch(()=>{}) : v.pause(); }), {threshold:.25});
+const watch = root => root.querySelectorAll("video").forEach(v=>io.observe(v));
+const bySlug = Object.fromEntries(WORKS.map(w=>[w.slug,w]));
+
+const best = document.getElementById("best");
+best.innerHTML = SITE.featured.map((f,i)=>{ const w = bySlug[f.slug]; return `<a class="pick koma" href="${workUrl(w)}" target="_blank" rel="noopener"><div class="v"><span class="band">${w.ch}</span><video muted loop playsinline preload="none" poster="works/${w.slug}.jpg" src="works/${w.slug}.mp4"></video></div><div class="cap"><span class="t">${w.t}</span><span class="note">${f.note}</span></div></a>`; }).join("");
+watch(best);
+
+const card = w => `<a class="work koma" href="${workUrl(w)}" target="_blank" rel="noopener"><div class="v"><span class="band"></span><video muted loop playsinline preload="none" poster="works/${w.slug}.jpg" src="works/${w.slug}.mp4"></video></div><div class="cap"><span class="t">${w.t}</span></div></a>`;
+const tabs = document.getElementById("tabs"), panel = document.getElementById("tabpanel");
+tabs.innerHTML = CHANNELS.map((c,i)=>`<button type="button" role="tab" aria-selected="${i===0}" data-i="${i}">${c[0]}</button>`).join("");
+function showTab(i){
+  const c = CHANNELS[i];
+  panel.querySelectorAll("video").forEach(v=>io.unobserve(v));
+  panel.innerHTML = `<div class="head"><b>${c[0]}</b><span>${c[1]}</span><a href="${chUrl(c[0])}" target="_blank" rel="noopener">チャンネルを見る →</a></div><div class="strip">${WORKS.filter(w=>w.ch===c[0]).map(card).join("")}</div>`;
+  watch(panel);
+  tabs.querySelectorAll("button").forEach(b=>b.setAttribute("aria-selected", b.dataset.i==i));
+}
+tabs.addEventListener("click", e=>{ const b=e.target.closest("button"); if(b) showTab(+b.dataset.i); });
+showTab(0);
+
+const koma = (s,i)=>`<figure class="panel koma"><div class="img"><img src="manga/p${i+1}.jpg" alt="${s[0]}の工程の Luna" loading="lazy"><span class="tag"><b>${i+1}</b>${s[0]}</span><span class="fuki">${s[2]}</span></div><figcaption>${s[1]}</figcaption></figure>`;
+document.getElementById("flow").innerHTML = STEPS.map((s,i)=>`<span><b>${i+1}</b>${s[0]}</span>`).join("");
+document.getElementById("manga").innerHTML = [["その 1","ネタから声まで",0],["その 2","絵から計測まで",4]].map(([n,h,o])=>
+  `<div class="yonkoma"><h3><span>${n}</span>${h}</h3>${STEPS.slice(o,o+4).map((s,k)=>koma(s,o+k)).join("")}</div>`).join("");
+document.getElementById("tech").innerHTML = TECH.map((t,i)=>`<span style="--r:${[-3,2,-1,3,-2,1,-3,2][i]}">${t}</span>`).join("");
+document.getElementById("svc").innerHTML = SVC.map(s=>`<div class="koma"><b>${s[0]}</b><p>${s[1]}</p></div>`).join("");
+
+const MAIL_BODY = ["作りたいもの（解説／漫画調／実写編集／長尺 など）：","本数：","使う場所（ご自身のチャンネル／広告 など）：","希望の時期：","お手持ちの素材：","そのほか："].join("\n");
+document.getElementById("write").href = `mailto:${document.getElementById("mail").textContent}?subject=${encodeURIComponent("【ご依頼】動画制作のご相談")}&body=${encodeURIComponent(MAIL_BODY)}`;
+document.getElementById("copy").addEventListener("click", e=>{
+  const t = document.getElementById("mail").textContent;
+  navigator.clipboard.writeText(t).then(()=>{ e.target.textContent="コピーしました"; })
+    .catch(()=>{ const r=document.createRange(); r.selectNodeContents(document.getElementById("mail")); const s=getSelection(); s.removeAllRanges(); s.addRange(r); e.target.textContent="選択しました"; });
+});
+</script>
