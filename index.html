@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>CADENCE</title>
-<meta name="description" content="CADENCE は縦型ショート動画の制作スタジオです。題材の選定から台本・音声・映像・公開・計測までを一つの工程にまとめています。">
+<meta name="description" content="CADENCE は縦型ショートと長尺の解説動画の制作スタジオです。題材の選定から台本・音声・映像・公開・計測までを一つの工程にまとめています。">
 <meta property="og:title" content="CADENCE">
-<meta property="og:description" content="CADENCE は縦型ショート動画の制作スタジオです。題材の選定から台本・音声・映像・公開・計測までを一つの工程にまとめています。">
+<meta property="og:description" content="CADENCE は縦型ショートと長尺の解説動画の制作スタジオです。題材の選定から台本・音声・映像・公開・計測までを一つの工程にまとめています。">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://studio-cadence.github.io/">
-<meta property="og:image" content="https://studio-cadence.github.io/bg/edo-sento.jpg">
+<meta property="og:image" content="https://studio-cadence.github.io/bg/sekigahara-long.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Dela+Gothic+One&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap">
@@ -103,11 +103,13 @@ p,li,figcaption,dd,small{text-wrap:pretty}
 .intro{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:18px;margin-block:24px 0}
 .intro .koma{padding:clamp(20px,3vw,36px)}
 .intro p{margin:0;font-size:16px;max-width:44ch;text-wrap:pretty}
-.nums{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0}
+.nums{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;container-type:inline-size}
 .nums div{display:grid;gap:4px;align-content:center;justify-items:center;padding:18px 8px;border-right:3px solid var(--ink)}
-.nums div:last-child{border-right:0}
-.nums b{font:400 clamp(40px,5vw,64px)/1 var(--display);color:var(--red);font-variant-numeric:tabular-nums}
-.nums span{font:700 12px/1.3 var(--sans)}
+.nums div:nth-child(3),.nums div:last-child{border-right:0}
+.nums .wide{grid-column:1/-1;border-right:0;border-bottom:3px solid var(--ink)}
+.nums .wide b{font-size:clamp(36px,16cqi,72px)}
+.nums b{font:400 clamp(24px,10cqi,56px)/1 var(--display);color:var(--red);font-variant-numeric:tabular-nums}
+.nums span{font:700 12px/1.3 var(--sans);text-align:center}
 .nums-note{grid-column:1/-1;text-align:center;font-size:11px;color:var(--ink-2);border-top:3px solid var(--ink);padding:6px}
 @media (max-width:800px){.intro{grid-template-columns:1fr}}
 
@@ -135,7 +137,8 @@ p,li,figcaption,dd,small{text-wrap:pretty}
 .pick .v{position:relative;aspect-ratio:9/16;background:#000;border-bottom:4px solid var(--ink);overflow:hidden}
 .pick video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .pick .cap{padding:12px 14px 16px;display:grid;gap:6px;align-content:start}
-.pick .t{font:400 17px/1.45 var(--display)}
+.pick .t{font:400 17px/1.45 var(--display);text-wrap:balance}
+.work .t{text-wrap:pretty}
 .pick .note{font:700 12px/1.5 var(--sans);color:var(--ink-2)}
 @media (max-width:640px){.best{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:74%;overflow-x:auto;scroll-snap-type:x mandatory;padding:14px 14px 16px 12px;margin-inline:-4px}.pick{scroll-snap-align:start}}
 /* カードの上の黄色い帯: 動画の上端（各局の黒ヘッダー）がカードの黒枠と一続きに見えないように。大きい 3 本はチャンネル名入り。
@@ -186,12 +189,17 @@ p,li,figcaption,dd,small{text-wrap:pretty}
 .stamps{display:flex;flex-wrap:wrap;gap:12px 16px;margin-top:26px}
 .stamps span{font:700 13px/1 var(--sans);color:var(--red);border:3px solid var(--red);border-radius:6px;padding:8px 10px;rotate:calc(var(--r) * 1deg);background:var(--panel)}
 
-.svc{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
-.svc div{padding:20px 20px 24px;display:grid;gap:10px;align-content:start}
-.svc b{font:400 19px/1.4 var(--display)}
+.svc{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.svc details{padding:20px 20px 24px;align-content:start}
+.svc summary{list-style:none;font:400 19px/1.4 var(--display)}
+.svc summary::-webkit-details-marker{display:none}
+.svc summary span span{display:inline-block}
+.svc details p{margin-top:10px}
 .svc p{margin:0;font-size:13px;color:var(--ink-2)}
+.svc-lead{margin:0 0 16px;font:700 14px/1.7 var(--sans)}
 @media (max-width:900px){.svc{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:480px){.svc{grid-template-columns:1fr}}
+@media (min-width:481px){.svc summary{pointer-events:none}}
+@media (max-width:480px){.svc{gap:10px}.svc details{padding:12px 12px 13px}.svc summary{font-size:15px;cursor:pointer;display:flex;justify-content:space-between;gap:6px}.svc summary::after{content:"＋";flex:none}.svc details[open] summary::after{content:"－"}.svc details p{margin-top:8px;font-size:12px}}
 .budget{margin-top:18px;padding:18px 22px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 28px;align-items:start;background:var(--yellow)}
 .budget b{font:400 19px/1.4 var(--display)}
 .budget ul{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px}
@@ -246,8 +254,8 @@ footer .cred{display:flex;flex-direction:column;gap:4px}
 
 <div class="wrap">
   <section class="intro">
-    <div class="koma"><p>CADENCE は縦型ショート動画の制作スタジオです。題材の選定から台本・音声・映像・公開・計測までを一つの工程にまとめ、<span data-site="channels">5</span> つのチャンネルで毎日公開しています。</p></div>
-    <div class="koma nums"><div><b data-site="channels">5</b><span>チャンネル</span></div><div><b data-site="videos">33</b><span>本を公開</span></div><div class="nums-note"><span data-site="asOf">2026-09-25</span> 時点（予約済みを含む）</div></div>
+    <div class="koma"><p>CADENCE は縦型ショートと長尺の解説動画の制作スタジオです。題材の選定から台本・音声・映像・公開・計測までを一つの工程にまとめ、運営するチャンネル「日本むかしぐらし」で毎日公開しています。</p></div>
+    <div class="koma nums"><div class="wide"><b data-site="views">203,279</b><span>回の再生</span></div><div><b data-site="videos">42</b><span>本を公開</span></div><div><b data-site="top">32,802</b><span>回（1 本の最高）</span></div><div class="nums-note"><span data-site="asOf">2026-10-07</span> 時点</div></div>
   </section>
 
   <section class="sec" id="works">
@@ -266,14 +274,15 @@ footer .cred{display:flex;flex-direction:column;gap:4px}
 
   <section class="sec" id="service">
     <div class="sec-h"><h2>お請けできること</h2></div>
+    <p class="svc-lead">運営しているチャンネルの題材に限らず、動画まわりのことは基本的にお請けします。ここに無いものも、まずはご相談ください。</p>
     <div class="svc" id="svc"></div>
-    <div class="budget koma"><b>予算が変わるところ</b><ul><li>尺（〜60 秒のショート／8〜15 分の長尺）</li><li>本数（単発／シリーズ）</li><li>絵の枚数と描き込み</li><li>素材の持ち込みの有無</li><li>納期</li></ul><p>料金は内容をうかがってお見積もりします。</p></div>
+    <div class="budget koma"><b>予算が変わるところ</b><ul><li>尺（ショート／長尺）</li><li>本数（単発／シリーズ）</li><li>絵の枚数と描き込み・動きの量</li><li>素材の持ち込みの有無</li><li>納期</li></ul><p>料金は内容をうかがってお見積もりします。</p></div>
   </section>
 
   <section class="sec" id="faq">
     <div class="sec-h"><h2>よくある質問</h2></div>
     <div class="faq">
-      <details class="koma" open><summary>何を書いて送ればいいですか</summary><div class="a"><p>作りたいもの（上の 4 つのどれに近いか）・本数・使う場所（ご自身のチャンネル／広告など）・希望の時期・お手持ちの素材の有無。下の「メールを書く」を押すと、この項目入りのひな形が開きます。</p></div></details>
+      <details class="koma" open><summary>何を書いて送ればいいですか</summary><div class="a"><p>作りたいもの（上のどれに近いか。当てはまらなくても大丈夫です）・本数・使う場所（ご自身のチャンネル／広告／社内・イベントなど）・希望の時期・お手持ちの素材の有無。下の「メールを書く」を押すと、この項目入りのひな形が開きます。</p></div></details>
       <details class="koma"><summary>返信はいつ来ますか</summary><div class="a"><p>2 日以内にお返事します。</p></div></details>
       <details class="koma"><summary>料金はいくらですか</summary><div class="a"><p>上の「予算が変わるところ」で決まります。内容をうかがってお見積もりします。</p></div></details>
       <details class="koma"><summary>チャンネルを持っていなくても頼めますか</summary><div class="a"><p>はい。動画の納品だけでもお請けします。</p></div></details>
@@ -289,7 +298,7 @@ footer .cred{display:flex;flex-direction:column;gap:4px}
 
   <footer>
     <span>© 2026 CADENCE</span>
-    <span class="cred"><span>作品の音声: VOICEVOX:青山龍星 ／ AquesTalk<span class="nw">（株式会社アクエスト）</span></span><span>音楽: BGMer・甘茶の音楽工房・OpenTracks</span><span>効果音: 効果音ラボ</span><span>絵: 自作（AI 生成）・いらすとや・パブリックドメインの資料<span class="nw">（国立国会図書館ほか）</span></span><span>各動画の出典は概要欄に記載</span></span>
+    <span class="cred"><span>作品の音声: VOICEVOX:青山龍星 ／ Fish Audio<span class="nw">（じん）</span></span><span>音楽: BGMer・甘茶の音楽工房・OpenTracks</span><span>効果音: 効果音ラボ</span><span>絵: 自作（AI 生成）・パブリックドメインの資料<span class="nw">（国立国会図書館ほか）</span></span><span>各動画の出典は概要欄に記載</span></span>
   </footer>
 </div>
 
@@ -301,28 +310,45 @@ new IntersectionObserver(([e])=>document.getElementById("dock").classList.toggle
 const WORKS = SITE.works;
 const CHANNELS = SITE.channels;
 const chUrl = name => `https://www.youtube.com/channel/${CHANNELS.find(c=>c[0]===name)[2]}`;
-// 未公開（動画 ID が空）はチャンネルへ
-const workUrl = w => w.v ? `https://www.youtube.com/shorts/${w.v}` : chUrl(w.ch);
-// 数字は site.js から入れる
-const SITE_VALUES = {channels: SITE.channels.length, videos: SITE.videos, asOf: SITE.asOf};
-document.querySelectorAll("[data-site]").forEach(el=>{ el.textContent = SITE_VALUES[el.dataset.site]; });
+// 長尺は /watch、ショートは /shorts
+const workUrl = w => `https://www.youtube.com/${w.long ? "watch?v=" : "shorts/"}${w.v}`;
+// 数字は site.js の固定値を入れ、鍵があれば YouTube から取り直す
+const fmt = n => Number(n).toLocaleString("ja-JP");
+function putNums(o){ document.querySelectorAll("[data-site]").forEach(el=>{ const k=el.dataset.site; if(o[k]!=null) el.textContent = k==="asOf" ? o[k] : fmt(o[k]); }); }
+putNums(SITE);
+if (SITE.ytKey) {
+  const api = (path, q) => fetch(`https://www.googleapis.com/youtube/v3/${path}?${q}&key=${SITE.ytKey}`).then(r=>r.ok ? r.json() : Promise.reject(r.status));
+  Promise.all([
+    api("channels", `part=statistics&id=${SITE.statChannels.join(",")}`),
+    api("videos", `part=statistics&id=${WORKS.map(w=>w.v).join(",")}`),
+  ]).then(([c, v]) => {
+    const sum = k => c.items.reduce((a,x)=>a+Number(x.statistics[k]||0), 0);
+    const d = new Date(), asOf = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+    if (c.items.length === SITE.statChannels.length) putNums({videos: sum("videoCount"), views: sum("viewCount"), top: Math.max(SITE.top, ...v.items.map(x=>Number(x.statistics.viewCount||0))), asOf});
+  }).catch(()=>{});
+}
 const STEPS = [
  // [工程, 説明, Luna の一言]。絵は manga/p1〜p8（字なし）
  ["走査","伸びている動画を毎日集め、型ごとに分けて次の題材の候補を出す","伸びてるの、今日はこれ"],
  ["題材","型に合う話を選び、初見で何の話か分かるかを先に確かめる","分かんない話は、ボツ"],
  ["台本","一秒単位で組む。間は句読点で書き、どの音声エンジンでも同じに読める","一秒ずつ、組むよ"],
  ["音声","合成音声で読み上げ、行ごとの尺を測って映像の切れ目を決める","尺はここで決まる"],
- ["画像","場面ごとに絵を起こし、同じ人物の顔が途中で変わらないよう照合する","顔、途中で変えない"],
- ["組み立て","ヘッダー・テロップ・フリガナ・効果音・BGM を台本から焼く","全部、台本から焼く"],
- ["公開","12:00 と 19:00 に予約し、公開日時を画面で照合する","12時と19時。毎日"],
+ ["画像","場面ごとに絵を起こし、要所は動かす。同じ人物の顔が途中で変わらないよう照合する","顔、途中で変えない"],
+ ["組み立て","テロップ・フリガナ・地図・効果音・BGM を台本から組んで書き出す","全部、台本から組む"],
+ ["公開","毎日決まった時刻に予約し、公開日時を画面で照合する","毎日、同じ時刻に"],
  ["計測","視聴を続けた割合と維持グラフを見て、次の一本の作りを変える","どこで離れたか、見る"],
 ];
-const TECH = ["Python","ffmpeg","Playwright","YouTube Data API v3","VOICEVOX","AivisSpeech","画像生成モデル","Git"];
+const TECH = ["Python","Remotion","ffmpeg","YouTube Data API v3","VOICEVOX","Fish Audio","画像生成モデル","動画生成（Wan 2.2）","Git"];
 const SVC = [
- ["ナレーション付き解説ショート","歴史・雑学・商品やサービスの由来を、写真や絵とナレーションで 1 分に。"],
- ["漫画調のストーリーショート","体験談や再現コントを、漫画風の絵と台詞で。シリーズでの制作も。"],
- ["実写素材の編集＋テロップ","お手持ちの映像を縦型に切り出し、テロップ・効果音・BGM を付けて。"],
- ["長尺の解説動画","ショートで試した題材を、8〜15 分の解説に広げます。"],
+ ["解説ショート","歴史・雑学・科学・商品の由来など、どんな題材も写真や絵とナレーションで 1 分に。"],
+ ["ストーリー・|再現ドラマ","体験談・再現コント・キャラクターものを、漫画調やアニメ調の絵と台詞で。シリーズでの制作も。"],
+ ["長尺の解説・|ドキュメンタリー","地図・図解・動く絵を使った、数分〜20 分ほどの横型の解説動画。"],
+ ["商品・サービス|の紹介","広告や SNS 向けの縦型動画。使い方の説明から、誕生の物語まで。"],
+ ["広報・|採用・|研修","企業・自治体・団体の紹介、採用向けの動画、社内研修や教材の解説動画。"],
+ ["図解・|モーション|グラフィックス","仕組みや数字、地図の動きを、アニメーションでわかりやすく。"],
+ ["実写・|配信の編集","お手持ちの映像や配信から切り抜き・ダイジェストを作り、テロップ・効果音・BGM を付けて。"],
+ ["ナレーション・|字幕","合成音声のナレーション、字幕・フリガナ付け、文字起こし。多言語の字幕もご相談ください。"],
+ ["チャンネルの|企画・運用","題材選び・台本・投稿の予約から、視聴データを見た改善まで、まとめてお任せいただけます。"],
 ];
 
 // 散らばる作品（x%, y%, 傾き）。先頭 3 枚だけ動画、残りはポスター
@@ -332,18 +358,18 @@ const pile = document.getElementById("pile");
 const bg = document.getElementById("bg");
 const heroGo = () => pile.classList.remove("wait");
 Promise.all([
-  new Promise(r => { const i = new Image(); i.onload = i.onerror = r; i.src = "bg/edo-sento.jpg"; }),
+  new Promise(r => { const i = new Image(); i.onload = i.onerror = r; i.src = "bg/sekigahara-long.jpg"; }),
   document.fonts ? document.fonts.ready : null,
   new Promise(r => document.readyState === "complete" ? r() : addEventListener("load", r, {once:true})),
   new Promise(r => document.visibilityState === "visible" ? r() : document.addEventListener("visibilitychange", function f(){ if(document.visibilityState === "visible"){ document.removeEventListener("visibilitychange", f); r(); } })),
 ]).then(() => requestAnimationFrame(() => requestAnimationFrame(heroGo)));
 setTimeout(heroGo, 6000);
-const bgv = ["edo-sento","chuusha-kippu"].map((s,i)=>{ const v=document.createElement("video"); Object.assign(v,{muted:true,loop:true,playsInline:true,autoplay:true,src:`bg/${s}.mp4`,poster:`bg/${s}.jpg`}); v.setAttribute("muted",""); if(i===0) v.classList.add("on"); bg.appendChild(v); return v; });
+const bgv = ["sekigahara-long","edo-sento"].map((s,i)=>{ const v=document.createElement("video"); Object.assign(v,{muted:true,loop:true,playsInline:true,autoplay:true,src:`bg/${s}.mp4`,poster:`bg/${s}.jpg`}); v.setAttribute("muted",""); if(i===0) v.classList.add("on"); bg.appendChild(v); return v; });
 let bi = 0;
 setInterval(()=>{ bgv[bi].classList.remove("on"); bi=(bi+1)%bgv.length; bgv[bi].classList.add("on"); }, 8000);
 // 社名の中の作品: 1.25 秒の拍で切り替える。映っていない 3 本は止めておく
 const mm = document.getElementById("markMedia");
-const hv = ["katsushika-oi","oshiri-missile","yatai-meshi","kuuki-yomeru"].map((s,i)=>{ const v=document.createElement("video"); Object.assign(v,{muted:true,loop:true,playsInline:true,autoplay:i===0,src:`works/${s}.mp4`,poster:`works/${s}.jpg`}); v.setAttribute("muted",""); if(i===0) v.classList.add("on"); mm.appendChild(v); return v; });
+const hv = ["sekigahara-long","unko-oukoku","mibun-ranking","calorie-tsumiage"].map((s,i)=>{ const v=document.createElement("video"); Object.assign(v,{muted:true,loop:true,playsInline:true,autoplay:i===0,src:`works/${s}.mp4`,poster:`works/${s}.jpg`}); v.setAttribute("muted",""); if(i===0) v.classList.add("on"); mm.appendChild(v); return v; });
 let hi = 0;
 setInterval(()=>{ const a=hv[hi]; hi=(hi+1)%hv.length; const b=hv[hi]; b.play().catch(()=>{}); b.classList.add("on"); a.classList.remove("on"); a.pause(); }, 1250);
 SPOTS.forEach((p,i)=>{
@@ -384,11 +410,14 @@ watch(best);
 
 const card = w => `<a class="work koma" href="${workUrl(w)}" target="_blank" rel="noopener"><div class="v"><span class="band"></span><video muted loop playsinline preload="none" poster="works/${w.slug}.jpg" src="works/${w.slug}.mp4"></video></div><div class="cap"><span class="t">${w.t}</span></div></a>`;
 const tabs = document.getElementById("tabs"), panel = document.getElementById("tabpanel");
-tabs.innerHTML = CHANNELS.map((c,i)=>`<button type="button" role="tab" aria-selected="${i===0}" data-i="${i}">${c[0]}</button>`).join("");
+// タブは今のチャンネル＋最後に「これまでの作品」（チャンネルへのリンクは出さない）
+const TABS = [...CHANNELS.map(c=>({name:c[0], note:c[1], link:chUrl(c[0]), works:WORKS.filter(w=>!w.past && w.ch===c[0])})),
+  {name:SITE.past.name, note:SITE.past.note, link:"", works:WORKS.filter(w=>w.past)}];
+tabs.innerHTML = TABS.map((c,i)=>`<button type="button" role="tab" aria-selected="${i===0}" data-i="${i}">${c.name}</button>`).join("");
 function showTab(i){
-  const c = CHANNELS[i];
+  const c = TABS[i];
   panel.querySelectorAll("video").forEach(v=>io.unobserve(v));
-  panel.innerHTML = `<div class="head"><b>${c[0]}</b><span>${c[1]}</span><a href="${chUrl(c[0])}" target="_blank" rel="noopener">チャンネルを見る →</a></div><div class="strip">${WORKS.filter(w=>w.ch===c[0]).map(card).join("")}</div>`;
+  panel.innerHTML = `<div class="head"><b>${c.name}</b><span>${c.note}</span>${c.link ? `<a href="${c.link}" target="_blank" rel="noopener">チャンネルを見る →</a>` : ""}</div><div class="strip">${c.works.map(card).join("")}</div>`;
   watch(panel);
   tabs.querySelectorAll("button").forEach(b=>b.setAttribute("aria-selected", b.dataset.i==i));
 }
@@ -399,10 +428,12 @@ const koma = (s,i)=>`<figure class="panel koma"><div class="img"><img src="manga
 document.getElementById("flow").innerHTML = STEPS.map((s,i)=>`<span><b>${i+1}</b>${s[0]}</span>`).join("");
 document.getElementById("manga").innerHTML = [["その 1","ネタから声まで",0],["その 2","絵から計測まで",4]].map(([n,h,o])=>
   `<div class="yonkoma"><h3><span>${n}</span>${h}</h3>${STEPS.slice(o,o+4).map((s,k)=>koma(s,o+k)).join("")}</div>`).join("");
-document.getElementById("tech").innerHTML = TECH.map((t,i)=>`<span style="--r:${[-3,2,-1,3,-2,1,-3,2][i]}">${t}</span>`).join("");
-document.getElementById("svc").innerHTML = SVC.map(s=>`<div class="koma"><b>${s[0]}</b><p>${s[1]}</p></div>`).join("");
+document.getElementById("tech").innerHTML = TECH.map((t,i)=>`<span style="--r:${[-3,2,-1,3,-2,1,-3,2,-1][i]}">${t}</span>`).join("");
+// スマホ幅は 2 列の見出しだけにし、押すと説明が開く（9 枚を 1 列に積むと 2 画面を食う）
+const svcOpen = !matchMedia("(max-width:480px)").matches;
+document.getElementById("svc").innerHTML = SVC.map(s=>`<details class="koma"${svcOpen ? " open" : ""}><summary><span>${s[0].split("|").map(w=>`<span>${w}</span>`).join("")}</span></summary><p>${s[1]}</p></details>`).join("");
 
-const MAIL_BODY = ["作りたいもの（解説／漫画調／実写編集／長尺 など）：","本数：","使う場所（ご自身のチャンネル／広告 など）：","希望の時期：","お手持ちの素材：","そのほか："].join("\n");
+const MAIL_BODY = ["作りたいもの（解説／ストーリー／紹介・広報／図解／編集／長尺 など）：","本数：","使う場所（ご自身のチャンネル／広告／社内・イベント など）：","希望の時期：","お手持ちの素材：","そのほか："].join("\n");
 document.getElementById("write").href = `mailto:${document.getElementById("mail").textContent}?subject=${encodeURIComponent("【ご依頼】動画制作のご相談")}&body=${encodeURIComponent(MAIL_BODY)}`;
 document.getElementById("copy").addEventListener("click", e=>{
   const t = document.getElementById("mail").textContent;
