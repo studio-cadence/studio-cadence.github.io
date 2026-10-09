@@ -312,21 +312,10 @@ const CHANNELS = SITE.channels;
 const chUrl = name => `https://www.youtube.com/channel/${CHANNELS.find(c=>c[0]===name)[2]}`;
 // 長尺は /watch、ショートは /shorts
 const workUrl = w => `https://www.youtube.com/${w.long ? "watch?v=" : "shorts/"}${w.v}`;
-// 数字は site.js の固定値を入れ、鍵があれば YouTube から取り直す
+// 数字は site.js の値（毎日 GitHub Actions が書き換える）
 const fmt = n => Number(n).toLocaleString("ja-JP");
 function putNums(o){ document.querySelectorAll("[data-site]").forEach(el=>{ const k=el.dataset.site; if(o[k]!=null) el.textContent = k==="asOf" ? o[k] : fmt(o[k]); }); }
 putNums(SITE);
-if (SITE.ytKey) {
-  const api = (path, q) => fetch(`https://www.googleapis.com/youtube/v3/${path}?${q}&key=${SITE.ytKey}`).then(r=>r.ok ? r.json() : Promise.reject(r.status));
-  Promise.all([
-    api("channels", `part=statistics&id=${SITE.statChannels.join(",")}`),
-    api("videos", `part=statistics&id=${WORKS.map(w=>w.v).join(",")}`),
-  ]).then(([c, v]) => {
-    const sum = k => c.items.reduce((a,x)=>a+Number(x.statistics[k]||0), 0);
-    const d = new Date(), asOf = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
-    if (c.items.length === SITE.statChannels.length) putNums({videos: sum("videoCount"), views: sum("viewCount"), top: Math.max(SITE.top, ...v.items.map(x=>Number(x.statistics.viewCount||0))), asOf});
-  }).catch(()=>{});
-}
 const STEPS = [
  // [工程, 説明, Luna の一言]。絵は manga/p1〜p8（字なし）
  ["走査","伸びている動画を毎日集め、型ごとに分けて次の題材の候補を出す","伸びてるの、今日はこれ"],

@@ -1,0 +1,22 @@
+# CADENCE の LP の数字を 1 日 1 回取り直して commit する。鍵はリポジトリの Secret YT_API_KEY（ページには出さない）。
+# 正本は short-video-lab の research/cadence-lp/mock/gh/。build_site.py が .github/workflows/ に写す。
+name: update-stats
+on:
+  schedule:
+    - cron: "0 21 * * *"  # 毎日 6:00 JST
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 .github/update_stats.py site.js
+        env:
+          YT_API_KEY: ${{ secrets.YT_API_KEY }}
+      - run: |
+          git config user.name "CADENCE"
+          git config user.email "studio.cadence.jp@gmail.com"
+          git add site.js
+          git diff --cached --quiet || { git commit -q -m "Update stats" && git push; }
