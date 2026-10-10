@@ -1,11 +1,11 @@
 // LP に出す数字・チャンネル・作品の正本。ページはここから表示する（手で HTML に数字や作品を書かない）。
 // 数字は公開リポジトリの GitHub Actions（update-stats、毎日 6:00）と publish_site.ps1 が update_stats.py で書き換える。鍵はページに出さない。
 const SITE = {
-  asOf: "2026-10-09",
-  // Data API 2026-10-09 の値。statChannels の公開本数・再生の合計と、works の中の 1 本の最高
-  videos: 47,
-  views: 233188,
-  top: 39613,
+  asOf: "2026-10-10",
+  // Data API 2026-10-10 の値。statChannels の公開本数・再生の合計と、works の中の 1 本の最高
+  videos: 50,
+  views: 259611,
+  top: 44122,
   // 数字に数えるチャンネル（今のチャンネル＋過去作のチャンネル）
   statChannels: ["UCKWY0Ai2NUilf4H8DW19GCA","UCezfcf6CYuHm6coF37PWkTg","UCJhZRxZUDxgEJlm9YPkyxVQ"],
   // 今動いているチャンネル。[名前, 一言, チャンネル ID]。作品のタブはこの順の後ろに「これまでの作品」
