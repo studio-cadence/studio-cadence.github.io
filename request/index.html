@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Dela+Gothic+One&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap">
 <style>
 /* 受注ページ。見た目はトップ（index.html の C「コラージュ」）の紙・コマ・赤と黄をそのまま使う。
-   値段・著作権・連絡先の【本人が決める】は下書きの印。一覧は C:/agents/.scratch/cadence-request-questions.md */
+   【本人が決める】は下書きの印(残りは納期・見本の差し替え・キットの載せ方)。一覧は C:/agents/.scratch/cadence-request-questions.md */
 :root{
   --paper:#f4f6f8; --dot:rgba(20,20,23,.07); --ink:#141417; --ink-2:#55585f; --panel:#ffffff;
   --red:#e8322a; --yellow:#ffd21f;
@@ -51,7 +51,7 @@ p,li,figcaption,dd,small,td{text-wrap:pretty}
 .tbd{background:var(--yellow);outline:2px dashed var(--red);outline-offset:1px;padding:0 4px;font-weight:700;font-size:.92em}
 
 /* 種類と目安 */
-.kinds{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.kinds{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
 .kind{padding:20px 20px 22px;display:grid;gap:10px;align-content:start}
 .kind h3{margin:0;font:400 20px/1.35 var(--display)}
 .kind h3 span{display:inline-block;background:var(--red);color:var(--panel);font-size:13px;padding:3px 8px;margin-right:8px;vertical-align:3px}
@@ -61,7 +61,6 @@ p,li,figcaption,dd,small,td{text-wrap:pretty}
 .kind th{font-weight:700;white-space:nowrap;padding-right:10px}
 .kind td b{font:400 17px/1.3 var(--display);color:var(--red)}
 .kind .inc{font-size:12px;color:var(--ink-2)}
-@media (max-width:1000px){.kinds{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:640px){.kinds{grid-template-columns:1fr}}
 .note{margin-top:18px;padding:16px 20px;background:var(--yellow);font:700 13px/1.7 var(--sans)}
 .note ul{margin:6px 0 0;padding-left:1.2em}
@@ -80,11 +79,10 @@ p,li,figcaption,dd,small,td{text-wrap:pretty}
 @media (max-width:860px){.deals{grid-template-columns:1fr}}
 
 /* 見本 */
-.samples{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,340px);gap:22px;align-items:start}
+.samples{display:grid;max-width:1040px}
 .sample{margin:0;display:grid}
 .sample .frame{position:relative;background:#000;border-bottom:4px solid var(--ink)}
 .sample .frame.w{aspect-ratio:16/9}
-.sample .frame.t{aspect-ratio:9/16}
 .sample iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .sample figcaption{padding:10px 14px 12px;font:700 13px/1.6 var(--sans)}
 .sample figcaption b{display:block;font:400 16px/1.4 var(--display);margin-bottom:4px}
@@ -94,7 +92,7 @@ p,li,figcaption,dd,small,td{text-wrap:pretty}
 .manga-row img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-bottom:4px solid var(--ink)}
 .manga-cap{margin:12px 0 0;font:700 13px/1.6 var(--sans);color:var(--ink-2)}
 .manga-cap b{color:var(--ink);font:400 16px/1.4 var(--display);margin-right:8px}
-@media (max-width:860px){.samples{grid-template-columns:1fr}.samples .sample:last-child{max-width:360px;width:100%;justify-self:center}.manga-row{grid-template-columns:1fr 1fr}.manga-row figure:last-child{display:none}}
+@media (max-width:860px){.manga-row{grid-template-columns:1fr 1fr}.manga-row figure:last-child{display:none}}
 
 /* 流れ */
 .flow{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;counter-reset:s}
@@ -128,6 +126,7 @@ p,li,figcaption,dd,small,td{text-wrap:pretty}
 .contact .big{background:var(--yellow);border:5px solid var(--ink);border-radius:48px;padding:clamp(22px,4vw,44px) clamp(20px,5vw,64px);position:relative;max-width:100%}
 .contact .big::after{content:"";position:absolute;left:18%;bottom:-30px;width:34px;height:34px;background:var(--yellow);border-right:5px solid var(--ink);border-bottom:5px solid var(--ink);transform:skewX(24deg) rotate(28deg)}
 .contact .k{font:700 14px/1 var(--sans)}
+.contact .mail a{text-decoration:none;border-bottom:4px solid var(--ink)}
 .contact .mail{font:400 clamp(20px,3.6vw,44px)/1.3 var(--display);overflow-wrap:anywhere;margin-top:12px}
 .contact ul{margin:24px 0 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:6px 10px}
 .contact li{font:700 13px/1 var(--sans);background:var(--panel);border:2px solid var(--ink);padding:7px 9px}
@@ -148,7 +147,7 @@ footer a{text-decoration:none;border-bottom:2px solid var(--yellow)}
 <div class="wrap">
   <section class="head koma">
     <h1>動画制作のご依頼</h1>
-    <p>YouTube 漫画、絵を動かす解説動画、ショートの量産まで、台本・絵・声・BGM・編集まで一貫して制作します。作りたいものが決まっていなくても、題材と使う場所をうかがえばご提案します。</p>
+    <p>YouTube 漫画、絵を動かす解説動画、ショートの量産に対応し、台本・絵・声・BGM・編集まで一貫して制作します。作りたいものが決まっていなくても、題材と使う場所をうかがえばご提案します。</p>
   </section>
 
   <section class="sec" id="kinds">
@@ -184,12 +183,22 @@ footer a{text-decoration:none;border-bottom:2px solid var(--yellow)}
         </table>
         <p class="inc">ここに無いものも、まずはご相談ください。</p>
       </div>
+      <div class="kind koma">
+        <h3><span>D</span>制作パイプラインの構築</h3>
+        <p>お客様の作り方・台本の形・画風に合わせて、台本から動画までを自動で作る仕組み（Codex や Claude のスキル）を作って納めます。実例: YouTube 漫画を台本の表から作るスキルを、受託で構築しました。</p>
+        <table>
+          <tr><th>構築</th><td><b>55,000 円〜</b><br>内容と範囲はご相談で決めます</td></tr>
+          <tr><th>保守・機能追加</th><td>別途お見積もり</td></tr>
+        </table>
+        <p class="inc">55,000 円は実例の受託額（2 段階で 22,000 円＋33,000 円）。継続の割引の対象外です。</p>
+      </div>
     </div>
     <div class="note koma">値段が変わるところ: 尺・本数（単発／シリーズ）・絵の枚数と動きの量・台本の持ち込みの有無・納期・著作権の扱い（下の「著作権」）。
       <ul>
         <li>目安の根拠: 漫画動画（2 分）は制作会社の平均 230,000 円、ココナラ 108,666 円、ランサーズ 64,917 円（<a href="https://hidokei.jp/production/7409/" target="_blank" rel="noopener">日時計の調査</a>）。ランサーズの YouTube 漫画代行は 40 コマ以内 56,250 円・21 日（<a href="https://www.lancers.jp/menu/detail/126710" target="_blank" rel="noopener">出品例</a>）。撮影なしの YouTube 動画は 10 分程度で 5〜15 万円（<a href="https://lumii.co.jp/blog/youtube-video-market-price/" target="_blank" rel="noopener">Lumii の相場</a>）。</li>
         <li>工程を分けて頼む場合: クラウドワークスの相場（台本 1 円〜/字、動画編集 3,000〜8,000 円〜/本、ナレーション 10,000 円〜）を足すと、一式で 1.5〜4 万円ほど（推定。<a href="https://crowdworks.jp/pages/guides/employer/pricing" target="_blank" rel="noopener">クラウドワークスの相場</a>）。一式の出品は、ココナラの YouTube 漫画（台本・漫画・声・編集込み）で 6〜7.5 万円（<a href="https://coconala.com/services/1290812" target="_blank" rel="noopener">出品例</a>）。</li>
         <li>CADENCE の値段は、工程を分けて頼む相場と、一式の出品の間に置いています。</li>
+        <li>D の相場: ココナラの「台本から解説動画を自動生成するツールの開発」は 150,000 円（税抜、<a href="https://coconala.com/services/4400354" target="_blank" rel="noopener">出品例</a>）。ランサーズの「AI 漫画画像生成の自動化システム開発」は 10〜20 万円（<a href="https://www.lancers.jp/work/detail/5246035" target="_blank" rel="noopener">依頼例</a>）。</li>
       </ul>
     </div>
     <div class="deals" id="deals">
@@ -215,10 +224,6 @@ footer a{text-decoration:none;border-bottom:2px solid var(--yellow)}
         <div class="frame w"><iframe src="https://www.youtube-nocookie.com/embed/h7XYd8m5raA" title="関ヶ原の敗軍・島津の兵は、どうやって薩摩に帰ったのか【完全版】" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
         <figcaption><b>B 解説動画（長尺）</b>関ヶ原の敗軍・島津の兵は、どうやって薩摩に帰ったのか【完全版】<br><span>12 分。動く絵（Wan 2.2）・地図と図解・カメラの移動・ナレーション・BGM。日本むかしぐらし</span></figcaption>
       </figure>
-      <figure class="sample koma">
-        <div class="frame t"><iframe src="https://www.youtube-nocookie.com/embed/OZTtLwuEd74" title="うんこを連呼する子どもに、母が静かに言った一言" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
-        <figcaption><b>漫画調のショート</b>うんこを連呼する子どもに、母が静かに言った一言<br><span>子育ての一場面を、漫画調の絵と台詞で。ゆる再現劇場</span></figcaption>
-      </figure>
     </div>
     <div class="manga-row">
       <figure class="koma"><img src="manga-1.jpg" alt="YouTube 漫画の見本。移動パン屋の荷台を開ける男性と、縦書きのナレーション" loading="lazy" width="1280" height="720"></figure>
@@ -232,10 +237,10 @@ footer a{text-decoration:none;border-bottom:2px solid var(--yellow)}
     <div class="sec-h"><h2>流れ</h2><small>ご相談からの返信は 2 日以内</small></div>
     <ol class="flow">
       <li class="koma"><b>ご相談</b><p>作りたいもの・本数・使う場所・希望の時期・お手持ちの素材をお送りください。決まっていない項目は空欄で大丈夫です。</p></li>
-      <li class="koma"><b>お見積もり</b><p>内容・値段・納期・修正の回数・著作権の扱いを書いてお返しします。合意したら着手です。<span class="tbd">【本人が決める: 前払い／後払い・支払い方法】</span></p></li>
+      <li class="koma"><b>お見積もり</b><p>内容・値段・納期・修正の回数・著作権の扱いを書いてお返しします。合意したら、着手金として 50% をお支払いいただき着手します。</p></li>
       <li class="koma"><b>制作</b><p>まず台本（漫画は台本と人物の設定画）をお見せし、確定してから絵・声・編集に進みます。</p></li>
       <li class="koma"><b>修正</b><p>完成版をお送りし、直してほしいところをまとめて伺います。回数は下の「修正」のとおり。</p></li>
-      <li class="koma"><b>納品</b><p>mp4（1920×1080、ショートは 1080×1920）でお渡しします。使った音声・音楽のクレジットも添えます。</p></li>
+      <li class="koma"><b>納品</b><p>mp4（1920×1080、ショートは 1080×1920）でお渡しします。使った音声・音楽のクレジットも添えます。残りの 50% は納品時にお支払いください（方法は銀行振込など、ご相談で）。</p></li>
     </ol>
   </section>
 
@@ -244,7 +249,7 @@ footer a{text-decoration:none;border-bottom:2px solid var(--yellow)}
     <div class="terms">
       <div class="koma">
         <h3>修正</h3>
-        <p>台本の段階で 1 回、完成版で 2 回まで、料金に含みます。<span class="tbd">【本人が決める: 回数】</span></p>
+        <p>台本の段階で 1 回、完成版で 2 回まで、料金に含みます。</p>
         <ul>
           <li>それを超える修正は、1 回 2,000 円〜</li>
           <li>台本が確定した後の、話の筋や人物を変える修正は、作り直しとしてお見積もりします</li>
@@ -252,10 +257,11 @@ footer a{text-decoration:none;border-bottom:2px solid var(--yellow)}
         </ul>
       </div>
       <div class="koma">
-        <h3>著作権 <span class="tbd">【本人が決める: 下の 2 つの形と値段】</span></h3>
+        <h3>著作権</h3>
         <div class="rights">
-          <div><b>利用許諾（標準）</b><p>納品した動画を、ご自身のチャンネル・SNS・広告・社内で、期間の定めなく使えます。収益化もできます。著作権は CADENCE に残り、制作実績として紹介することがあります（紹介しない指定もできます）。</p></div>
-          <div><b>著作権の譲渡（追加料金・応相談）</b><p>動画の著作権（著作権法 27 条・28 条の権利を含む）をお渡しし、著作者人格権は行使しません。目安は基本料金の +50% <span class="tbd">【本人が決める: 割合】</span>。台本・設定画などの途中の素材も含めるかは、ご相談で決めます。</p></div>
+          <div><b>利用許諾（標準）</b><p>納品した動画は、ご自身のチャンネル・SNS・広告・社内で、期間や媒体の制限なくお使いいただけます。収益化や、字幕の追加・切り出しなどの手直しも自由です。著作権は CADENCE に残ります。制作実績として紹介することがあります（紹介しない指定もできます）。</p></div>
+          <div><b>著作権の譲渡（ご希望の場合・追加料金）</b><p>お見積もりの前にお申し付けください。動画の著作権（著作権法 27 条・28 条の権利を含む）をお渡しし、著作者人格権は行使しません。追加の料金は、内容をうかがってお見積もりします。</p></div>
+          <div><b>元の素材</b><p>標準の納品物は、完成した動画とクレジットです。台本・絵の元データ・編集のプロジェクトファイルが必要な場合は、追加料金でお渡しします（有料素材など、規約でお渡しできないものを除きます）。</p></div>
         </div>
         <p class="small" style="margin-top:12px">どちらの場合も、お預かりした素材はお客様のものです。こちらで用意する合成音声（VOICEVOX ほか）・音楽・効果音は、それぞれの規約の範囲でのご利用になります（クレジット表記が要るもの、YouTube の Content ID に登録できないものはお伝えします）。AI で生成した絵の部分には、法律上の著作権が生じない場合があります。</p>
       </div>
@@ -264,8 +270,8 @@ footer a{text-decoration:none;border-bottom:2px solid var(--yellow)}
   </section>
 
   <section class="contact" id="contact">
-    <div class="big"><div class="k">ご依頼・ご相談はこちらへ</div><div class="mail"><span class="tbd">【連絡先: 本人が入れる】</span></div></div>
-    <ul><li>作りたいもの（A／B／C）</li><li>本数</li><li>使う場所</li><li>希望の時期</li><li>お手持ちの素材</li></ul>
+    <div class="big"><div class="k">ご依頼・ご相談はこちらへ</div><div class="mail"><a href="mailto:studio.cadence.jp@gmail.com?subject=%E3%80%90%E3%81%94%E4%BE%9D%E9%A0%BC%E3%80%91%E5%8B%95%E7%94%BB%E5%88%B6%E4%BD%9C%E3%81%AE%E3%81%94%E7%9B%B8%E8%AB%87">studio.cadence.jp<wbr>@gmail.com</a></div></div>
+    <ul><li>作りたいもの（A／B／C／D）</li><li>本数</li><li>使う場所</li><li>希望の時期</li><li>お手持ちの素材</li></ul>
     <small>この 5 つを書いて送っていただくと、見積もりが早くなります</small>
   </section>
 
