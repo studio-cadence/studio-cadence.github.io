@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>CADENCE — 題材に合わせて描き分ける動画制作</title>
-<meta name="description" content="CADENCE は、歴史の長尺ドキュメンタリーから解説ショート、YouTube 漫画、再現ドラマまで、題材に合わせて絵と声を作り分ける動画制作です。台本・声・絵・動き・字幕を、自作の AI の制作の仕組みで仕上げます。">
+<meta name="description" content="CADENCE は、歴史の長尺ドキュメンタリーから解説ショート、YouTube 漫画、再現ドラマまで、題材に合わせて絵と声を作り分ける動画制作です。独自の AI を組み込んだ制作の仕組みで、台本から声・絵・動き・字幕までを一貫して仕上げます。">
 <meta property="og:title" content="CADENCE — 題材に合わせて描き分ける動画制作">
-<meta property="og:description" content="歴史の長尺ドキュメンタリーから解説ショート、YouTube 漫画、再現ドラマまで。台本・声・絵・動き・字幕を、自作の AI の制作の仕組みで仕上げます。">
+<meta property="og:description" content="歴史の長尺ドキュメンタリーから解説ショート、YouTube 漫画、再現ドラマまで。独自の AI を組み込んだ制作の仕組みで、台本から声・絵・動き・字幕までを一貫して仕上げます。">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://studio-cadence.github.io/">
 <meta property="og:image" content="https://studio-cadence.github.io/bg/sekigahara-long.jpg">
@@ -14,8 +14,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Dela+Gothic+One&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap">
 <style>
-/* 2026-11-24 刷新案（TASK-86）。見せ方を「ショートのスタジオ」から「表現の幅のポートフォリオ」へ。
-   チャンネルの一覧・合計の再生・公開本数は出さず、作品へ直接つなぐ。色と字は前の版（赤・黄・墨、Dela Gothic One）を引き継ぐ */
+/* 2026-11-24 刷新案（TASK-86）。チャンネルの一覧・合計の再生・公開本数は出さない。
+   見本は関ヶ原の長尺 1 本と、表現の幅を見せる短いデモ 1 本だけ（本人 11/24）。色と字は前の版（赤・黄・墨、Dela Gothic One）を引き継ぐ */
 :root{
   --ink:#141417; --ink-2:#55585f; --ink-3:#8a8d94; --paper:#f4f5f7; --panel:#fff; --line:#d9dbe0;
   --red:#e8322a; --yellow:#ffd21f;
@@ -34,18 +34,19 @@ p,li,figcaption,dd,small{text-wrap:pretty}
 [hidden]{display:none!important}
 
 /* 上の帯 */
-.navbar{position:sticky;top:0;z-index:50;background:var(--ink);color:var(--paper)}
+/* Hero が黒なので、帯は白にして下に線と影を付け、ヘッダーと分かるようにする（本人 11/24） */
+.navbar{position:sticky;top:0;z-index:50;background:#fff;color:var(--ink);border-bottom:1px solid var(--line);box-shadow:0 2px 14px rgba(0,0,0,.18)}
 .nav{display:flex;align-items:center;gap:22px;height:58px;font:700 13px/1 var(--sans)}
 .brand{font:900 20px/1 var(--wide);font-variation-settings:"wdth" 125;letter-spacing:-.02em;text-decoration:none}
 .nav .sp{flex:1}
 .nav .links{display:flex;gap:22px;align-items:center}
-.nav .links a{text-decoration:none;opacity:.85}
+.nav .links a{text-decoration:none;opacity:.8}
 .nav .links a:hover{opacity:1;text-decoration:underline;text-decoration-color:var(--yellow);text-decoration-thickness:3px;text-underline-offset:6px}
 .nav .links .go{opacity:1;background:var(--red);color:#fff;padding:9px 14px;border-radius:3px}
-.nav .links .go:hover{text-decoration:none;background:#fff;color:var(--ink)}
+.nav .links .go:hover{text-decoration:none;background:var(--ink);color:#fff}
 @media (max-width:720px){.nav{gap:8px;height:52px}.brand{font-size:17px}.nav .links{gap:2px}.nav .links a:not(.go){display:none}.nav .links .go{padding:9px 12px}}
 
-/* 最初の画面: 見出し → 表現の帯（縦と横の作品を同じ高さで並べる） */
+/* 最初の画面: 見出しと一行、数字だけ（作品の帯は置かない） */
 .hero{background:var(--ink);color:var(--paper);padding-block:clamp(32px,4.4vw,64px) clamp(28px,3.4vw,48px);overflow:hidden}
 .hero-top{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:clamp(20px,4vw,72px);align-items:end}
 .eyebrow{font:700 12px/1 var(--sans);letter-spacing:.18em;color:var(--yellow);margin:0 0 18px}
@@ -63,19 +64,6 @@ p,li,figcaption,dd,small{text-wrap:pretty}
 .facts b{font:400 20px/1 var(--display);color:#fff;margin-right:4px}
 @media (max-width:900px){.hero-top{grid-template-columns:1fr}}
 
-.reel{display:flex;gap:12px;margin-top:clamp(24px,3vw,40px);overflow-x:auto;scrollbar-width:none;padding-bottom:4px;scroll-snap-type:x proximity}
-.reel::-webkit-scrollbar{display:none}
-.reel a{flex:var(--ar) 1 0;min-width:0;text-decoration:none;scroll-snap-align:start}
-.reel .f{position:relative;overflow:hidden;background:#000;border-radius:4px}
-.reel .f.v{aspect-ratio:9/16}
-.reel .f.h{aspect-ratio:16/9}
-.reel video,.reel img{width:100%;height:100%;object-fit:cover}
-.reel .lab{display:flex;gap:8px;align-items:baseline;margin-top:10px;font:400 14px/1.3 var(--display);color:#fff}
-.reel .lab small{font:700 11px/1 var(--sans);color:var(--ink-3)}
-.reel a:hover .f{outline:3px solid var(--yellow);outline-offset:2px}
-@media (max-width:900px){.reel a{flex:0 0 auto}.reel .f{height:clamp(150px,42vw,260px)}}
-.reel .lab{white-space:nowrap;overflow:hidden}
-.reel .lab small{white-space:nowrap}
 
 /* 節 */
 .sec{padding-top:clamp(64px,8vw,120px)}
@@ -84,13 +72,18 @@ p,li,figcaption,dd,small{text-wrap:pretty}
 .sec-h .no{font:900 13px/1 var(--wide);color:var(--red);letter-spacing:.06em}
 .sec-h small{font:700 13px/1.5 var(--sans);color:var(--ink-2)}
 
-/* 代表作 */
+/* 見本: 関ヶ原（このページで再生）→ 表現の幅のデモ。2 段とも同じ形 */
+.feature + .feature{margin-top:clamp(36px,4.4vw,64px);padding-top:clamp(36px,4.4vw,64px);border-top:1px solid var(--line)}
 .feature{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:clamp(20px,3.2vw,48px);align-items:start}
 .player{position:relative;aspect-ratio:16/9;background:#000;border-radius:4px;overflow:hidden;cursor:pointer}
 .player img,.player video,.player iframe{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border:0}
 .player .play{position:absolute;left:50%;top:50%;translate:-50% -50%;display:grid;place-items:center;width:84px;height:84px;border-radius:50%;background:var(--red);color:#fff;border:0;cursor:pointer;box-shadow:0 8px 30px rgba(0,0,0,.4)}
 .player .play::before{content:"";margin-left:6px;border-left:24px solid #fff;border-top:15px solid transparent;border-bottom:15px solid transparent}
 .player:hover .play{scale:1.06}
+.player.soon{cursor:default}
+.player.soon img{opacity:.45}
+.player .soon-t{position:absolute;inset:0;display:grid;place-items:center;align-content:center;gap:8px;color:#fff;text-align:center;font:400 clamp(18px,2vw,26px)/1.3 var(--display)}
+.player .soon-t small{font:700 12px/1 var(--sans);color:var(--yellow);letter-spacing:.12em}
 .player .len{position:absolute;right:12px;bottom:12px;background:rgba(0,0,0,.75);color:#fff;font:700 12px/1 var(--sans);padding:6px 8px;border-radius:3px}
 .feature h3{margin:0;font:400 clamp(19px,1.7vw,24px)/1.5 var(--display);text-wrap:balance}
 .feature .form{display:inline-block;margin:0 0 12px;font:700 12px/1 var(--sans);background:var(--yellow);padding:6px 8px}
@@ -100,33 +93,11 @@ p,li,figcaption,dd,small{text-wrap:pretty}
 .feature .yt{display:inline-block;margin-top:16px;font:700 13px/1 var(--sans);text-decoration:none;border-bottom:3px solid var(--yellow);padding-bottom:3px}
 @media (max-width:900px){.feature{grid-template-columns:1fr}}
 
-/* 表現の幅: 1 行 = 1 つの表現。左に名前と作り、右に作品 */
-.range{border-top:2px solid var(--ink)}
-.style{display:grid;grid-template-columns:minmax(220px,300px) minmax(0,1fr);gap:clamp(18px,3vw,44px);padding-block:clamp(22px,2.6vw,34px);border-bottom:1px solid var(--line)}
-.style h3{margin:0;font:400 clamp(19px,1.8vw,24px)/1.3 var(--display)}
-.style .form{margin:8px 0 0;font:700 12px/1 var(--sans);color:var(--red);letter-spacing:.04em}
-.style p{margin:10px 0 0;font-size:14px;color:var(--ink-2)}
-.tags{display:flex;flex-wrap:wrap;gap:5px;margin:12px 0 0;padding:0;list-style:none}
-.tags li{font:700 11px/1 var(--sans);background:#e8e9ed;padding:6px 7px;border-radius:2px}
-.row{display:flex;gap:12px;overflow-x:auto;scrollbar-width:thin;padding-bottom:6px;scroll-snap-type:x proximity}
-.card{flex:0 0 auto;width:clamp(132px,12.5vw,176px);text-decoration:none;scroll-snap-align:start}
-.card.h{width:clamp(250px,24vw,340px)}
-.card .f{position:relative;aspect-ratio:9/16;background:#000;border-radius:4px;overflow:hidden}
-.card.h .f{aspect-ratio:16/9}
-.card video,.card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.card .t{margin-top:8px;font:700 12.5px/1.55 var(--sans);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.card:hover .f{outline:3px solid var(--yellow);outline-offset:2px}
-.card .yt{position:absolute;right:6px;bottom:6px;font:700 10px/1 var(--sans);background:rgba(0,0,0,.72);color:#fff;padding:4px 5px;border-radius:2px}
-.style.web .web-card{display:flex;align-items:center;gap:18px;flex-wrap:wrap;text-decoration:none;background:var(--ink);color:var(--paper);padding:22px 24px;border-radius:4px;max-width:640px}
-.style.web .web-card b{font:400 17px/1.4 var(--display)}
-.style.web .web-card span{font:700 12px/1.6 var(--sans);color:#c3c6cc}
-.style.web .web-card i{font-style:normal;margin-left:auto;font:400 14px/1 var(--display);color:var(--yellow)}
-@media (max-width:760px){.style{grid-template-columns:1fr}.card{width:38vw}.card.h{width:72vw}}
 
 /* 受託の仕事 */
 .jobs{background:var(--ink);color:var(--paper);margin-top:clamp(64px,8vw,120px);padding-block:clamp(48px,6vw,88px)}
 .jobs .sec-h small{color:#b9bcc3}
-.jobs-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,1.6vw,22px)}
+.jobs-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(12px,1.6vw,22px)}
 .job{border:1px solid #3a3c43;border-radius:4px;padding:22px 22px 24px;background:#1c1d21}
 .job .k{font:700 12px/1 var(--sans);color:var(--yellow);letter-spacing:.06em}
 .job h3{margin:10px 0 0;font:400 19px/1.45 var(--display);text-wrap:balance}
@@ -194,7 +165,7 @@ footer .cred{display:flex;flex-direction:column;gap:4px}
 <header class="navbar">
   <div class="wrap nav">
     <a class="brand" href="#">CADENCE</a><span class="sp"></span>
-    <span class="links"><a href="#feature">代表作</a><a href="#range">表現の幅</a><a href="#jobs">受託</a><a href="#service">ご依頼</a><a class="go" href="#contact">相談する</a></span>
+    <span class="links"><a href="#feature">見本</a><a href="#jobs">受託</a><a href="#service">ご依頼</a><a class="go" href="#contact">相談する</a></span>
   </div>
 </header>
 
@@ -206,46 +177,39 @@ footer .cred{display:flex;flex-direction:column;gap:4px}
         <h1><span>題材に合わせて、</span><br><span><em>絵も声も</em>作り分ける。</span></h1>
       </div>
       <div>
-        <p class="lead">歴史の長尺ドキュメンタリーから、30 秒の解説ショート、YouTube 漫画、漫画調の再現ドラマまで。台本・声・絵・動き・字幕を、自分で作った AI の制作の仕組みで仕上げます。</p>
-        <div class="ctas"><a class="btn red" href="#contact">相談する →</a><a class="btn line" href="#range">作品を見る</a></div>
+        <p class="lead">歴史の長尺ドキュメンタリーから、30 秒の解説ショート、YouTube 漫画、漫画調の再現ドラマまで。独自の AI を組み込んだ制作の仕組みで、台本から声・絵・動き・字幕までを一貫して仕上げます。</p>
+        <div class="ctas"><a class="btn red" href="#contact">相談する →</a><a class="btn line" href="#feature">見本を見る</a></div>
       </div>
     </div>
     <ul class="facts">
       <li><b>10 以上</b>自分で開設した YouTube チャンネル</li>
       <li><b>100 本超</b>作った動画（うち長尺 25 本ほど）</li>
-      <li><b>22 件</b>クラウドワークスで受注</li>
     </ul>
-    <div class="reel" id="reel" aria-label="表現の幅"></div>
   </div>
 </section>
 
 <main class="wrap">
   <section class="sec" id="feature">
-    <div class="sec-h"><span class="no">01</span><h2>代表作</h2><small>このページで再生できます</small></div>
+    <div class="sec-h"><span class="no">01</span><h2>見本</h2><small>関ヶ原の長尺と、表現の幅をまとめた短いデモ。どちらもこのページで再生します</small></div>
     <div class="feature" id="featureBox"></div>
-  </section>
-
-  <section class="sec" id="range">
-    <div class="sec-h"><span class="no">02</span><h2>表現の幅</h2><small>同じ仕組みで、絵柄・尺・語り口を変えています。押すと YouTube で開きます</small></div>
-    <div class="range" id="styles"></div>
+    <div class="feature" id="demoBox"></div>
   </section>
 </main>
 
 <section class="jobs" id="jobs">
   <div class="wrap">
-    <div class="sec-h"><span class="no">03</span><h2>受託の仕事</h2><small>受託の作品は、先方との約束で公開していません。種類と作り方だけ書きます</small></div>
+    <div class="sec-h"><span class="no">02</span><h2>受託の仕事</h2><small>受託の作品は、先方との約束で公開していません。種類と作り方だけ書きます</small></div>
     <div class="jobs-grid">
-      <div class="job"><div class="k">長尺の解説動画</div><h3>15〜20 分前後の解説を、続けて何本も</h3><p>支給の台本と語りから、AI の絵・動き・テロップ・BGM で仕上げる。先方の型に合わせて仕組みを作り、2 本目からはその仕組みで作る。</p></div>
       <div class="job"><div class="k">制作の仕組みづくり</div><h3>YouTube 漫画を台本から作る仕組み</h3><p>先方の台本の形と画風に合わせて、台本から漫画動画を作る仕組みを作って納めた。その後、15〜20 分の漫画動画の制作も続けて受けた。</p></div>
       <div class="job"><div class="k">実写の編集</div><h3>撮った素材を、伝わる尺に</h3><p>先方が撮った素材から、工程が分かる約 10 分の体験動画や、SNS 用の約 30 秒の動画に。字幕・見出し・BGM を付ける。</p></div>
     </div>
-    <div class="how"><b>仕組みから作るので、<br class="pc">2 本目から速い</b><p>受託では、尺・絵柄・声・字幕の決まりを先方に合わせて仕組みにし、同じ品質で続けて作ります。自分のチャンネルでも、短尺の仕組みを土台に長尺用の仕組みを足し、着手から公開までを 1 日で行いました（上の代表作）。</p></div>
+    <div class="how"><b>仕組みから作るので、<br class="pc">2 本目から速い</b><p>受託では、尺・絵柄・声・字幕の決まりを先方に合わせて仕組みにし、同じ品質で続けて作ります。自分のチャンネルでも、短尺の仕組みを土台に長尺用の仕組みを足し、着手から公開までを 1 日で行いました（上の見本の関ヶ原）。</p></div>
   </div>
 </section>
 
 <main class="wrap">
   <section class="sec" id="process">
-    <div class="sec-h"><span class="no">04</span><h2>つくり方</h2></div>
+    <div class="sec-h"><span class="no">03</span><h2>つくり方</h2></div>
     <ol class="steps">
       <li><b><span>1</span>型を決める</b><p>尺・絵柄・声・字幕の決まりと、参考の動画をうかがう。</p></li>
       <li><b><span>2</span>台本</b><p>お持ち込みの台本でも、こちらで書いても。確定してから絵に進む。</p></li>
@@ -257,7 +221,7 @@ footer .cred{display:flex;flex-direction:column;gap:4px}
   </section>
 
   <section class="sec" id="service">
-    <div class="sec-h"><span class="no">05</span><h2>お請けできること</h2></div>
+    <div class="sec-h"><span class="no">04</span><h2>お請けできること</h2></div>
     <div class="svc">
       <div><b>YouTube 漫画</b><p>体験談・再現ドラマ・逆転劇・商品の物語を、漫画の絵と声で。</p></div>
       <div><b>解説動画</b><p>歴史・雑学・仕組みの解説。ショートから 20 分ほどの長尺まで。</p></div>
@@ -270,7 +234,7 @@ footer .cred{display:flex;flex-direction:column;gap:4px}
   </section>
 
   <section class="sec" id="faq">
-    <div class="sec-h"><span class="no">06</span><h2>よくある質問</h2></div>
+    <div class="sec-h"><span class="no">05</span><h2>よくある質問</h2></div>
     <div class="faq">
       <details open><summary>何を書いて送ればいいですか</summary><div class="a"><p>作りたいもの（上のどれに近いか。当てはまらなくても大丈夫です）・本数・使う場所（ご自身のチャンネル／広告／社内・イベントなど）・希望の時期・お手持ちの素材の有無。下の「メールを書く」を押すと、この項目入りのひな形が開きます。</p></div></details>
       <details><summary>返信はいつ来ますか</summary><div class="a"><p>2 日以内にお返事します。</p></div></details>
@@ -309,20 +273,9 @@ const io = new IntersectionObserver(es => es.forEach(en => { const v = en.target
 const watch = root => root.querySelectorAll("video").forEach(v => io.observe(v));
 const clip = (slug, dir="works") => `<video muted loop playsinline preload="none" poster="${dir}/${slug}.jpg" src="${dir}/${slug}.mp4"></video>`;
 
-// 最初の画面の帯: 表現ごとに 1 本ずつ（縦と横を同じ高さで）
-const F = SITE.featured, S = SITE.styles;
-const reelItems = [
-  {href:"#feature", self:true, h:true, media:clip(F.slug, "bg"), name:"長尺ドキュメンタリー", form:"横・約 12 分"},
-  {href:ytUrl(S[0].works[0]), v:true, media:clip(S[0].works[0].slug), name:S[0].name, form:"縦・約 30 秒"},
-  {href:S[1].href, self:true, h:true, media:`<img src="${S[1].works[0].img}" alt="">`, name:S[1].name, form:"横"},
-  {href:ytUrl(S[2].works[0]), v:true, media:clip(S[2].works[0].slug), name:S[2].name, form:"縦"},
-  {href:ytUrl(S[3].works[0]), v:true, media:clip(S[3].works[0].slug), name:S[3].name, form:"縦"},
-];
-$("reel").innerHTML = reelItems.map(r => `<a style="--ar:${r.h ? 1.7778 : .5625}" href="${r.href}"${r.self ? "" : ' target="_blank" rel="noopener"'}><div class="f ${r.h ? "h" : "v"}">${r.media}</div><div class="lab">${r.name}<small>${r.form}</small></div></a>`).join("");
-$("reel").querySelectorAll("video").forEach(v => { v.preload = "metadata"; });
-watch($("reel"));
+const F = SITE.featured, D = SITE.demo;
 
-// 代表作: 押すとこのページで YouTube を再生する（読み込みは押してから）
+// 見本 1 段目（関ヶ原）: 押すとこのページで YouTube を再生する（読み込みは押してから）
 $("featureBox").innerHTML = `
   <div class="player" id="player" role="button" tabindex="0" aria-label="${esc(F.t)} を再生">
     <img src="bg/${F.slug}.jpg" alt="" loading="lazy"><button class="play" type="button" aria-label="再生"></button><span class="len">12:00</span>
@@ -339,21 +292,16 @@ const play = () => { const p = $("player"); if (p.dataset.on) return; p.dataset.
 $("player").addEventListener("click", play);
 $("player").addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); play(); } });
 
-// 表現の幅
-const card = (s, w) => w.img
-  ? `<a class="card h" href="${s.href}"><div class="f"><img src="${w.img}" alt="${esc(w.t)}" loading="lazy"></div><div class="t">${esc(w.t)}</div></a>`
-  : `<a class="card" href="${ytUrl(w)}" target="_blank" rel="noopener"><div class="f">${clip(w.slug)}<span class="yt">▶ YouTube</span></div><div class="t">${esc(w.t)}</div></a>`;
-const A = SITE.avatar;
-$("styles").innerHTML = S.map(s => `
-  <div class="style">
-    <div><h3>${s.name}</h3><div class="form">${s.form}</div><p>${s.note}</p><ul class="tags">${s.tags.map(t => `<li>${t}</li>`).join("")}</ul></div>
-    <div class="row">${s.works.map(w => card(s, w)).join("")}</div>
-  </div>`).join("") + `
-  <div class="style web">
-    <div><h3>${A.name}</h3><div class="form">${A.form}</div><p>${A.note}</p></div>
-    <div><a class="web-card" href="${A.href}" target="_blank" rel="noopener"><span><b>分身の案内役</b><br>Web 制作の見本集の右下「分身を呼ぶ」から動きます</span><i>開く →</i></a></div>
+// 見本 2 段目（表現の幅のデモ）。SITE.demo.src に動画のパスを入れると、準備中の枠が動画に替わる
+$("demoBox").innerHTML = `
+  ${D.src
+    ? `<div class="player"><video controls playsinline preload="metadata" poster="${D.poster}" src="${D.src}"></video></div>`
+    : `<div class="player soon"><img src="${D.poster}" alt="" loading="lazy"><div class="soon-t"><small>COMING SOON</small>デモ動画は準備中</div></div>`}
+  <div>
+    <span class="form">${D.form}</span>
+    <h3>${esc(D.t)}</h3>
+    <p>${D.note}</p>
   </div>`;
-watch($("styles"));
 
 $("tools").innerHTML = ["Python","Remotion","ffmpeg","画像生成","動画生成（Wan 2.2）","VOICEVOX","Fish Audio","YouTube Data API"].map(t => `<li>${t}</li>`).join("");
 
