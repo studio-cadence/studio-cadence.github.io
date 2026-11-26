@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Dela+Gothic+One&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap">
 <style>
 /* 2026-11-24 刷新案（TASK-86）。チャンネルの一覧・合計の再生・公開本数は出さない。
-   見本は関ヶ原の長尺 1 本と、表現の幅を見せる短いデモ 1 本だけ（本人 11/24）。色と字は前の版（赤・黄・墨、Dela Gothic One）を引き継ぐ */
+   見本は表現の幅を見せる短いデモ 1 本と関ヶ原の長尺 1 本だけ（本人 11/24。11/27 にデモリール v12 を入れて先頭に）。色と字は前の版（赤・黄・墨、Dela Gothic One）を引き継ぐ */
 :root{
   --ink:#141417; --ink-2:#55585f; --ink-3:#8a8d94; --paper:#f4f5f7; --panel:#fff; --line:#d9dbe0;
   --red:#e8322a; --yellow:#ffd21f;
@@ -46,23 +46,34 @@ p,li,figcaption,dd,small{text-wrap:pretty}
 .nav .links .go:hover{text-decoration:none;background:var(--ink);color:#fff}
 @media (max-width:720px){.nav{gap:8px;height:52px}.brand{font-size:17px}.nav .links{gap:2px}.nav .links a:not(.go){display:none}.nav .links .go{padding:9px 12px}}
 
-/* 最初の画面: 見出しと一行、数字だけ（作品の帯は置かない） */
-.hero{background:var(--ink);color:var(--paper);padding-block:clamp(32px,4.4vw,64px) clamp(28px,3.4vw,48px);overflow:hidden}
-.hero-top{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:clamp(20px,4vw,72px);align-items:end}
-.eyebrow{font:700 12px/1 var(--sans);letter-spacing:.18em;color:var(--yellow);margin:0 0 18px}
-.hero h1{margin:0;font:400 clamp(30px,4.3vw,64px)/1.22 var(--display);letter-spacing:.01em}
-.hero h1 span{display:inline-block}
+/* 最初の画面（2026-11-27、TASK-86）: 本人が 11/26 に合格を出したポートフォリオ（react-shadcn main 3dfe4b0）の Hero に寄せる。
+   背景はデモリールの頭と同じ流れ（世界→オーブ→俯瞰→円盤→殺陣）の約 12.8 秒の輪（hero/、素材はポートフォリオから流用）。
+   止め絵を先に出し、映像が回りだしたら重ねる。映像は「動きを減らす」設定を見ずに常に自動再生（本人 11/26）。縦の画面には縦の版。
+   字は明るく、真ん中に暗がりを敷いて夕景と閃光の上で読ませる */
+.hero{position:relative;display:grid;align-content:center;min-height:clamp(34rem,calc(100svh - 58px),60rem);padding-block:clamp(56px,8vw,120px);background:#2a1b24;color:#f4f5f7;text-align:center;overflow:clip}
+.hero-bg{position:absolute;inset:0;z-index:0;pointer-events:none}
+.hero-bg img,.hero-bg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero-bg video{opacity:0;transition:opacity .6s}
+.hero-bg video.on{opacity:1}
+.hero-bg::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 62% 48% at 50% 48%,rgb(14 9 18/.62),rgb(14 9 18/.18) 100%)}
+.hero-in{position:relative;z-index:1;width:min(100%,58rem);margin-inline:auto}
+.hero .eyebrow{margin:0 0 18px;font:900 clamp(15px,1.3vw,19px)/1 var(--wide);font-variation-settings:"wdth" 125;letter-spacing:.02em}
+.hero .eyebrow small{font:700 12px/1 var(--sans);letter-spacing:.14em;color:var(--yellow);margin-left:.6em;vertical-align:.1em}
+/* 句の途中で折らない。折れるのは「、」の後だけ（ポートフォリオで 390px のとき 1 字だけ落ちた。本人 11/26）。入らない幅では anywhere で折る */
+.hero h1{margin:0;font:400 clamp(30px,5.2vw,68px)/1.24 var(--display);letter-spacing:.01em;word-break:keep-all;overflow-wrap:anywhere}
 .hero h1 em{font-style:normal;color:var(--yellow)}
-.lead{margin:0;font-size:clamp(15px,1.25vw,17px);line-height:1.95;color:#d6d8dd;max-width:38em}
-.ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+.hero .eyebrow,.hero h1,.lead{text-shadow:0 1px 20px rgb(0 0 0/.5)}
+.lead{margin:clamp(16px,2vw,24px) auto 0;font-size:clamp(15px,1.25vw,17px);line-height:1.95;color:#e1e6ec;max-width:38em}
+.ctas{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:clamp(24px,3vw,40px)}
 .btn{display:inline-flex;align-items:center;gap:8px;font:400 16px/1 var(--display);text-decoration:none;padding:15px 22px;border-radius:3px}
 .btn.red{background:var(--red);color:#fff}
 .btn.red:hover{background:#fff;color:var(--ink)}
-.btn.line{border:2px solid #fff;color:#fff;padding:13px 20px}
-.btn.line:hover{background:#fff;color:var(--ink)}
-.facts{display:flex;flex-wrap:wrap;gap:6px 28px;margin:clamp(22px,2.4vw,32px) 0 0;padding:0;list-style:none;font:700 13px/1.5 var(--sans);color:#c3c6cc}
+.btn.line{background:rgb(24 25 29/.72);border:1px solid #45474d;color:#fff;padding:14px 21px}
+.btn.line:hover{background:#2f3034}
+.facts{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 28px;margin:clamp(24px,3vw,40px) 0 0;padding:0;list-style:none;font:700 13px/1.5 var(--sans);color:#d6d8dd;text-shadow:0 1px 12px rgb(0 0 0/.6)}
 .facts b{font:400 20px/1 var(--display);color:#fff;margin-right:4px}
-@media (max-width:900px){.hero-top{grid-template-columns:1fr}}
+.facts small{font-size:11px;color:#b9bcc3}
+@media (max-width:640px){.facts{gap:10px 20px}.facts small{display:block;margin-top:2px}}
 
 
 /* 節 */
@@ -72,7 +83,7 @@ p,li,figcaption,dd,small{text-wrap:pretty}
 .sec-h .no{font:900 13px/1 var(--wide);color:var(--red);letter-spacing:.06em}
 .sec-h small{font:700 13px/1.5 var(--sans);color:var(--ink-2)}
 
-/* 見本: 関ヶ原（このページで再生）→ 表現の幅のデモ。2 段とも同じ形 */
+/* 見本: デモリール → 関ヶ原（どちらもこのページで再生）。2 段とも同じ形 */
 .feature + .feature{margin-top:clamp(36px,4.4vw,64px);padding-top:clamp(36px,4.4vw,64px);border-top:1px solid var(--line)}
 .feature{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:clamp(20px,3.2vw,48px);align-items:start}
 .player{position:relative;aspect-ratio:16/9;background:#000;border-radius:4px;overflow:hidden;cursor:pointer}
@@ -170,29 +181,28 @@ footer .cred{display:flex;flex-direction:column;gap:4px}
 </header>
 
 <section class="hero" id="hero">
-  <div class="wrap">
-    <div class="hero-top">
-      <div>
-        <p class="eyebrow">CADENCE — 動画制作</p>
-        <h1><span>題材に合わせて、</span><br><span><em>絵も声も</em>作り分ける。</span></h1>
-      </div>
-      <div>
-        <p class="lead">歴史の長尺ドキュメンタリーから、30 秒の解説ショート、YouTube 漫画、漫画調の再現ドラマまで。独自の AI を組み込んだ制作の仕組みで、台本から声・絵・動き・字幕までを一貫して仕上げます。</p>
-        <div class="ctas"><a class="btn red" href="#contact">相談する →</a><a class="btn line" href="#feature">見本を見る</a></div>
-      </div>
-    </div>
+  <div class="hero-bg" aria-hidden="true">
+    <picture><source media="(orientation: portrait)" srcset="hero/hero-world-portrait.webp"><img src="hero/hero-world.webp" alt="" decoding="async" fetchpriority="high"></picture>
+    <video id="heroVideo" muted loop playsinline autoplay preload="auto"></video>
+  </div>
+  <div class="wrap hero-in">
+    <p class="eyebrow">CADENCE<small>動画制作</small></p>
+    <h1>題材に合わせて、<em>絵も声も</em>作り分ける。</h1>
+    <p class="lead">歴史の長尺ドキュメンタリーから、30 秒の解説ショート、YouTube 漫画、漫画調の再現ドラマまで。独自の AI を組み込んだ制作の仕組みで、台本から声・絵・動き・字幕までを一貫して仕上げます。</p>
+    <div class="ctas"><a class="btn red" href="#contact">相談する →</a><a class="btn line" href="#feature">デモリールを見る</a></div>
     <ul class="facts">
       <li><b>10 以上</b>自分で開設した YouTube チャンネル</li>
-      <li><b>100 本超</b>作った動画（うち長尺 25 本ほど）</li>
+      <li><b>122 本</b>「日本むかしぐらし」の動画 <small>（2026-11-26 時点、過去の作品を含む）</small></li>
+      <li><b>25 本ほど</b>作った長尺の動画</li>
     </ul>
   </div>
 </section>
 
 <main class="wrap">
   <section class="sec" id="feature">
-    <div class="sec-h"><span class="no">01</span><h2>見本</h2><small>関ヶ原の長尺と、表現の幅をまとめた短いデモ。どちらもこのページで再生します</small></div>
-    <div class="feature" id="featureBox"></div>
+    <div class="sec-h"><span class="no">01</span><h2>見本</h2><small>作れる映像の幅をまとめた 43 秒のデモリールと、関ヶ原の長尺。どちらもこのページで再生します</small></div>
     <div class="feature" id="demoBox"></div>
+    <div class="feature" id="featureBox"></div>
   </section>
 </main>
 
@@ -252,7 +262,7 @@ footer .cred{display:flex;flex-direction:column;gap:4px}
 
   <footer>
     <span>© 2026 CADENCE</span>
-    <span class="cred"><span>作品の音声: VOICEVOX:青山龍星 ／ Fish Audio<span class="nw">（じん）</span></span><span>音楽: BGMer・甘茶の音楽工房・OpenTracks</span><span>効果音: 効果音ラボ</span><span>絵: 自作（AI 生成）・パブリックドメインの資料<span class="nw">（国立国会図書館ほか）</span></span><span>各動画の出典は概要欄に記載</span></span>
+    <span class="cred"><span>作品の音声: VOICEVOX:青山龍星 ／ Fish Audio<span class="nw">（じん）</span></span><span>音楽: BGMer・甘茶の音楽工房・OpenTracks</span><span>効果音: 効果音ラボ</span><span>デモリールの曲: "Club Diver" Kevin MacLeod (incompetech.com)<span class="nw">（CC BY 4.0）</span>／地図: 地理院タイル・ETOPO 2022</span><span>絵: 自作（AI 生成）・パブリックドメインの資料<span class="nw">（国立国会図書館ほか）</span></span><span>各動画の出典は概要欄に記載</span></span>
   </footer>
 </main>
 
@@ -292,16 +302,35 @@ const play = () => { const p = $("player"); if (p.dataset.on) return; p.dataset.
 $("player").addEventListener("click", play);
 $("player").addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); play(); } });
 
-// 見本 2 段目（表現の幅のデモ）。SITE.demo.src に動画のパスを入れると、準備中の枠が動画に替わる
+// 見本 1 段目（デモリール）。押すとこのページで音つきで再生する（動画の読み込みは押してから）
 $("demoBox").innerHTML = `
   ${D.src
-    ? `<div class="player"><video controls playsinline preload="metadata" poster="${D.poster}" src="${D.src}"></video></div>`
+    ? `<div class="player" id="demoPlayer" role="button" tabindex="0" aria-label="${esc(D.t)} を再生"><img src="${D.poster}" alt="" loading="lazy"><button class="play" type="button" aria-label="再生"></button><span class="len">${D.len}</span></div>`
     : `<div class="player soon"><img src="${D.poster}" alt="" loading="lazy"><div class="soon-t"><small>COMING SOON</small>デモ動画は準備中</div></div>`}
   <div>
     <span class="form">${D.form}</span>
     <h3>${esc(D.t)}</h3>
     <p>${D.note}</p>
+    ${D.made ? `<ul class="made">${D.made.map(m => `<li>${m}</li>`).join("")}</ul>` : ""}
   </div>`;
+if (D.src) {
+  const playDemo = () => { const p = $("demoPlayer"); if (p.dataset.on) return; p.dataset.on = 1; p.style.cursor = "default"; p.innerHTML = `<video controls playsinline autoplay preload="auto" poster="${D.poster}" src="${D.src}"></video>`; p.querySelector("video").play().catch(()=>{}); };
+  $("demoPlayer").addEventListener("click", playDemo);
+  $("demoPlayer").addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); playDemo(); } });
+}
+
+// Hero の背景。縦の画面は縦の版。止め絵の上に、回りだしたら重ねる。画面外・裏のタブでは止める（ポートフォリオの hero-world.tsx と同じ扱い）
+{
+  const hv = $("heroVideo");
+  hv.muted = true;
+  hv.src = `hero/${matchMedia("(orientation: portrait)").matches ? "hero-world-portrait.mp4" : "hero-world.mp4"}`;
+  hv.addEventListener("playing", () => hv.classList.add("on"));
+  let inView = true;
+  const sync = () => { if (inView && !document.hidden) hv.play().catch(()=>{}); else hv.pause(); };
+  new IntersectionObserver(([en]) => { inView = en.isIntersecting; sync(); }).observe($("hero"));
+  document.addEventListener("visibilitychange", sync);
+  sync();
+}
 
 $("tools").innerHTML = ["Python","Remotion","ffmpeg","画像生成","動画生成（Wan 2.2）","VOICEVOX","Fish Audio","YouTube Data API"].map(t => `<li>${t}</li>`).join("");
 
