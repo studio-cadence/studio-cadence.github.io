@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>動画制作のご依頼 | CADENCE</title>
-<meta name="description" content="CADENCE の動画制作の受注ページです。YouTube 漫画・解説動画などの種類、目安の値段と納期、見本、制作の流れ、修正と著作権の扱いをまとめています。">
+<meta name="description" content="CADENCE の動画制作の受注ページです。YouTube 漫画・解説動画などの種類と納期の目安、見本、制作の流れ、修正と著作権の扱いをまとめています。">
 <meta property="og:title" content="動画制作のご依頼 | CADENCE">
-<meta property="og:description" content="YouTube 漫画・解説動画などの種類、目安の値段と納期、見本、制作の流れ、修正と著作権の扱い。">
+<meta property="og:description" content="YouTube 漫画・解説動画などの種類と納期の目安、見本、制作の流れ、修正と著作権の扱い。">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://studio-cadence.github.io/request/">
 <meta property="og:image" content="https://studio-cadence.github.io/bg/sekigahara-long.jpg">
@@ -61,18 +61,6 @@ p,li,figcaption,dd,small,td{text-wrap:pretty}
 .note{margin-top:18px;padding:16px 20px;background:var(--yellow);font:700 13px/1.7 var(--sans)}
 .note ul{margin:6px 0 0;padding-left:1.2em}
 .note a{text-decoration:underline}
-/* 継続の割引・モニター価格 */
-.deals{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:18px;margin-top:18px}
-.deals .koma{padding:18px 22px 20px}
-.deals h3{margin:0 0 8px;font:400 19px/1.4 var(--display)}
-.deals p{margin:0 0 8px;font-size:14px}
-.deals table{border-collapse:collapse;width:100%;font-size:13px;margin:4px 0 8px}
-.deals th,.deals td{border-top:2px solid var(--ink);padding:7px 4px;text-align:left;vertical-align:top}
-.deals th{font-weight:700;padding-right:12px}
-.deals td b,.deals .mon b{font:400 18px/1.3 var(--display);color:var(--red)}
-.deals .mon{background:var(--yellow)}
-.deals .mon .small{color:var(--ink)}
-@media (max-width:860px){.deals{grid-template-columns:1fr}}
 
 /* 見本 */
 .samples{display:grid;max-width:1040px}
@@ -136,7 +124,7 @@ footer a{text-decoration:none;border-bottom:2px solid var(--yellow)}
 <div class="wrap navbar">
   <nav class="nav">
     <a class="brand" href="../">CADENCE</a><span class="sp"></span>
-    <span class="links"><a href="#kinds">値段</a><a href="#samples">見本</a><a href="#flow">流れ</a><a href="#terms">権利</a><a class="go" href="#contact">相談する</a></span>
+    <span class="links"><a href="#kinds">種類</a><a href="#samples">見本</a><a href="#flow">流れ</a><a href="#terms">権利</a><a class="go" href="#contact">相談する</a></span>
   </nav>
 </div>
 
@@ -147,39 +135,31 @@ footer a{text-decoration:none;border-bottom:2px solid var(--yellow)}
   </section>
 
   <section class="sec" id="kinds">
-    <div class="sec-h"><h2>作れる動画と目安</h2><small>値段は税込の目安で、初回の値段です。続けてご依頼いただくと 1 本あたりが下がります（下の「続けて頼むと」）</small></div>
+    <div class="sec-h"><h2>作れる動画</h2><small>料金はご相談のうえお見積もりします（応相談）。納期は目安です</small></div>
     <div class="kinds">
       <div class="kind koma">
         <h3><span>A</span>YouTube 漫画</h3>
         <p>漫画の絵に縦書きの吹き出しを入れ、合成音声の台詞とナレーション、BGM を付けて動画にします。体験談・再現ドラマ・逆転劇・商品の物語など。同じ人物の顔は最後まで揃えます。</p>
         <table>
-          <tr><th>ショート（〜1 分）</th><td><b>2,000 円〜</b></td></tr>
-          <tr><th>2〜3 分（〜40 コマ）</th><td><b>3,000 円〜</b></td></tr>
-          <tr><th>10 分前後</th><td><b>7,000 円〜</b></td></tr>
-          <tr><th>台本から頼む</th><td>1 字 1 円〜を足します（10 分・約 3,000 字で 3,000 円〜）</td></tr>
           <tr><th>納期</th><td>ショート 2〜3 日、2〜3 分 3〜5 日、10 分前後 5〜7 日</td></tr>
         </table>
-        <p class="inc">台本をお持ち込みの場合の値段です。絵・吹き出し・声（合成音声）・BGM・書き出しまで含みます。</p>
+        <p class="inc">絵・吹き出し・声（合成音声）・BGM・書き出しまで作ります。台本からのご依頼もお請けします。</p>
       </div>
       <div class="kind koma">
         <h3><span>B</span>解説動画</h3>
         <p>歴史・雑学・商品や仕組みの解説を、ナレーションに合わせて作ります。絵を動かす（画像から動画を作る AI、Wan 2.2）、地図や図解、カメラの寄り・引きで、静止画だけの動画より見続けてもらえる作りにします。</p>
         <table>
-          <tr><th>ショート（〜1 分）</th><td><b>3,000 円〜</b></td></tr>
-          <tr><th>長尺（10 分前後）</th><td><b>8,000〜10,000 円</b><br><span class="inc">15〜20 分は 13,000〜15,000 円。絵を動かす GPU を借りる費用を含みます</span></td></tr>
-          <tr><th>台本から頼む</th><td>下調べと出典の確認を含めて 1 字 1 円〜を足します（10 分・約 3,000 字で 3,000 円〜）</td></tr>
-          <tr><th>ナレーション</th><td>合成音声は値段に含みます。人の声をご希望の場合は別途お見積もり</td></tr>
+          <tr><th>ナレーション</th><td>合成音声で作ります。人の声もご相談ください</td></tr>
           <tr><th>納期</th><td>ショート 2〜3 日、長尺 5〜7 日</td></tr>
         </table>
-        <p class="inc">台本（と音声）をお持ち込みの場合の値段です。絵・動き・図解・字幕・BGM まで含みます。</p>
+        <p class="inc">絵・動き・図解・字幕・BGM まで作ります。台本は、下調べと出典の確認を含めてこちらで書くこともできます。</p>
       </div>
       <div class="kind koma">
         <h3><span>C</span>そのほか</h3>
         <p>商品・サービスの紹介、広報・研修の解説、お手持ちの映像の編集（テロップ・効果音・BGM）、ナレーションや字幕だけ、チャンネルの企画・運用まで。トップの「<a href="../#service">お請けできること</a>」にあるものは基本的にお請けします。</p>
         <table>
-          <tr><th>編集・字幕のみ</th><td><b>ショート 1,500 円〜</b><br><b>10 分前後 4,000 円〜</b></td></tr>
           <tr><th>納期</th><td>編集のみは 2〜5 日</td></tr>
-          <tr><th>シリーズ・定期</th><td>本数に応じてお見積もり</td></tr>
+          <tr><th>シリーズ・定期</th><td>本数に応じてご相談</td></tr>
         </table>
         <p class="inc">ここに無いものも、まずはご相談ください。</p>
       </div>
@@ -187,36 +167,12 @@ footer a{text-decoration:none;border-bottom:2px solid var(--yellow)}
         <h3><span>D</span>制作パイプラインの構築</h3>
         <p>お客様の作り方・台本の形・画風に合わせて、台本から動画までを自動で作る仕組み（Codex や Claude のスキル）を作って納めます。実例: YouTube 漫画を台本の表から作るスキルを、受託で構築しました。</p>
         <table>
-          <tr><th>構築</th><td><b>80,000 円〜</b><br>内容と範囲はご相談で決めます</td></tr>
-          <tr><th>保守・機能追加</th><td>別途お見積もり</td></tr>
+          <tr><th>構築</th><td>内容と範囲をうかがってご相談</td></tr>
+          <tr><th>保守・機能追加</th><td>ご相談</td></tr>
         </table>
-        <p class="inc">実例の受託額は 55,000 円（2 段階で 22,000 円＋33,000 円）。値段は下の帯の相場の下側に置いています。継続の割引の対象外です。</p>
       </div>
     </div>
-    <div class="note koma">値段が変わるところ: 尺・本数（単発／シリーズ）・絵の枚数と動きの量・台本の持ち込みの有無・納期・著作権の扱い（下の「著作権」）。
-      <ul>
-        <li>目安の根拠: AI で絵や声を作る動画の、クラウドワークスの募集の値段に合わせ、その下〜中央に置いています。台本（と音声）をお持ち込みの場合を基本の値段にし、台本から頼む場合は工程の相場で足します。</li>
-        <li>解説動画（台本・音声の支給、絵や素材は作る側）: クラウドワークスの同種の募集 13 件の中央値は 1 分あたり約 430 円。例として 15〜19 分 13,000 円・1 週間、AI 画像 100 枚の 10 分 8,800 円・3 日、15 分 10,000 円・初稿 1 週間。</li>
-        <li>AI 漫画: クラウドワークスの同種の募集の例として、台本の支給で 15〜20 分 9,000 円・1 週間。絵・声も支給の漫画動画の編集は 8〜10 分 3,500 円・3 日。</li>
-        <li>編集のみ・ショート: クラウドワークスの同種の募集の例として、1 分のショートの編集 1,650 円。15 分の動画編集は 8,000 円〜・5 日程度（<a href="https://crowdworks.jp/pages/guides/employer/pricing" target="_blank" rel="noopener">クラウドワークスの相場</a>）。</li>
-        <li>台本・声: YouTube の台本は 1 字 1 円〜、人の声のナレーションは 1 分程度で 10,000 円〜（同じ<a href="https://crowdworks.jp/pages/guides/employer/pricing" target="_blank" rel="noopener">相場のページ</a>）。</li>
-        <li>D の相場: ココナラの「台本から解説動画を自動生成するツールの開発」は 150,000 円（税抜、<a href="https://coconala.com/services/4400354" target="_blank" rel="noopener">出品例</a>）。ランサーズの「AI 漫画画像生成の自動化システム開発」は 10〜20 万円（<a href="https://www.lancers.jp/work/detail/5246035" target="_blank" rel="noopener">依頼例</a>）。</li>
-      </ul>
-    </div>
-    <div class="deals" id="deals">
-      <div class="koma"><h3>続けて頼むと、1 本あたりが下がります</h3>
-        <p>上の値段は初回の値段です。人物の設定・画風・動画の形式を作るのは初回だけで、2 本目からはそれを使い回せるためです。</p>
-        <table>
-          <tr><th>同じシリーズの 2 本目から</th><td><b>20% 引き</b><br>人物・画風・形式が同じもの</td></tr>
-          <tr><th>月 4 本以上の定期</th><td><b>30% 引き</b></td></tr>
-        </table>
-        <p class="small">どちらも目安です。本数と内容をうかがって、ご相談で決めます。</p>
-      </div>
-      <div class="koma mon"><h3>モニター価格（最初の 3 件）</h3>
-        <p>最初の 3 件は、納品のあとに感想を書いていただく代わりに、<b>20% 引き</b>でお請けします。</p>
-        <p class="small">モニター価格と継続の割引は重ねられません。</p>
-      </div>
-    </div>
+    <div class="note koma">料金はご相談のうえお見積もりします（応相談）。尺・本数（単発／シリーズ）・絵の枚数と動きの量・台本の持ち込みの有無・納期・著作権の扱い（下の「著作権」）をうかがって決めます。</div>
   </section>
 
   <section class="sec" id="samples">
@@ -239,7 +195,7 @@ footer a{text-decoration:none;border-bottom:2px solid var(--yellow)}
     <div class="sec-h"><h2>流れ</h2><small>ご相談からの返信は 2 日以内</small></div>
     <ol class="flow">
       <li class="koma"><b>ご相談</b><p>作りたいもの・本数・使う場所・希望の時期・お手持ちの素材をお送りください。決まっていない項目は空欄で大丈夫です。</p></li>
-      <li class="koma"><b>お見積もり</b><p>内容・値段・納期・修正の回数・著作権の扱いを書いてお返しします。合意したら、着手金として 50% をお支払いいただき着手します。</p></li>
+      <li class="koma"><b>お見積もり</b><p>内容・金額・納期・修正の回数・著作権の扱いを書いてお返しします。合意したら、着手金として 50% をお支払いいただき着手します。</p></li>
       <li class="koma"><b>制作</b><p>まず台本（漫画は台本と人物の設定画）をお見せし、確定してから絵・声・編集に進みます。</p></li>
       <li class="koma"><b>修正</b><p>完成版をお送りし、直してほしいところをまとめて伺います。回数は下の「修正」のとおり。</p></li>
       <li class="koma"><b>納品</b><p>mp4（1920×1080、ショートは 1080×1920）でお渡しします。使った音声・音楽のクレジットも添えます。残りの 50% は納品時にお支払いください（方法は銀行振込など、ご相談で）。</p></li>
@@ -253,7 +209,7 @@ footer a{text-decoration:none;border-bottom:2px solid var(--yellow)}
         <h3>修正</h3>
         <p>台本の段階で 1 回、完成版で 2 回まで、料金に含みます。</p>
         <ul>
-          <li>それを超える修正は、1 回 1,000 円〜</li>
+          <li>それを超える修正は、ご相談のうえお請けします</li>
           <li>台本が確定した後の、話の筋や人物を変える修正は、作り直しとしてお見積もりします</li>
           <li>誤字や読み間違いなど、こちらの誤りの修正は回数に数えません</li>
         </ul>
