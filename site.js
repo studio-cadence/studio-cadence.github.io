@@ -4,11 +4,11 @@
 // 下の asOf・videos・views・top・statChannels はページには出さない。公開リポジトリの GitHub Actions（update-stats、毎日 6:00）が
 // update_stats.py でこの行を書き換えるので、行が無いと Action が落ちる。残しておく。
 const SITE = {
-  asOf: "2026-11-26",
-  // Data API 2026-11-26 の値。statChannels の公開本数・再生の合計と、works の中の 1 本の最高
-  videos: 122,
-  views: 1492465,
-  top: 53528,
+  asOf: "2026-11-27",
+  // Data API 2026-11-27 の値。statChannels の公開本数・再生の合計と、works の中の 1 本の最高
+  videos: 124,
+  views: 1498857,
+  top: 53537,
   statChannels: ["UCKWY0Ai2NUilf4H8DW19GCA","UCezfcf6CYuHm6coF37PWkTg","UCJhZRxZUDxgEJlm9YPkyxVQ"],
 
   // 見本 1。数字と事実は profile/works/sekigahara.md
